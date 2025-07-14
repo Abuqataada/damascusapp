@@ -1,0 +1,174 @@
+{% extends "dashboard_base.html" %}
+
+{% block title %}Program Details - Damascus Projects & Services{% endblock %}
+{% block description %}Explore detailed information about our various programs and subscriptions at Damascus Projects.{% endblock %}
+
+{% block keywords %}Damascus Projects, program details, subscriptions, project management, housing, investor, visa sponsorship, innovator{% endblock %}
+
+{% block styles %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div id="programContent" class="program-box" style="text-align: left;">
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const queryParams = new URLSearchParams(window.location.search);
+    const programSlug = "{{ program.slug }}";
+
+    const programContent = document.getElementById("programContent");
+    console.log("Program Slug:", programSlug);
+
+    const programs = {
+        "project_management": `
+            <h4>Project Management Subscription</h4>
+            <p>🔍 Purchasing this subscription will provide access to Projects Management Subscription</p>
+            <div class="mb-3">
+                <img src="https://www.damascusprojects.com/wp-content/uploads/2025/06/Project-management-certification-in-Nigeria-e1749386998203.webp" alt="Project Management" class="img-fluid mb-3">
+                <h5>Project Management Subscription</h5>
+                <p>₦50,000.00</p>
+                <p>Damascus Projects offers dedicated Project Management Services to help innovators, entrepreneurs, and investors bring their visions to life with professional guidance and execution. This subscription enables our team to oversee, refine, and drive your project toward measurable success.</p>
+                <p>📝 Subscription Fee: ₦21,000<br>Please note: Your subscription will remain pending until payment has been confirmed.</p>
+                <p>✅ What This Subscription Includes:</p>
+                <ul>
+                    <li>Access to the official project submission and onboarding form</li>
+                    <li>Expert analysis and structuring of your project goals</li>
+                    <li>Assignment of a dedicated project manager</li>
+                    <li>Timeline creation, task delegation, and milestone tracking</li>
+                    <li>Regular updates, progress reviews, and strategic adjustments</li>
+                    <li>Risk assessment and quality assurance at every stage</li>
+                    <li>Assistance with collaboration opportunities and funding alignment</li>
+                </ul>
+                <p>🎯 Ideal For:</p>
+                <ul>
+                    <li>Idea owners and entrepreneurs launching new initiatives</li>
+                    <li>Investors looking to track and manage funded ventures</li>
+                    <li>Business managers needing operational or structural support</li>
+                    <li>Startups or teams lacking in-house project leadership</li>
+                </ul>
+                <p>Let Damascus Projects manage the complexity while you focus on the vision. With structured oversight and transparent coordination, your project is in capable hands.</p>
+                <a href="{{ url_for('payment_details', program_slug='project_management') }}" class="btn btn-primary mt-3">
+                    Subscribe Now
+                </a>
+                <p class="mt-2">Category: Subscriptions</p>
+        `,
+        "housing": `
+            <h4>Priority Shelter Subscription</h4>
+            <p>🔍 Purchasing this subscription will provide access to Priority Shelter Subscription</p>
+            <div class="mb-3">
+                <img src="https://www.damascusprojects.com/wp-content/uploads/2025/06/premium_photo-1661425407118-e64871d1ab65-scaled.jpeg" alt="Priority Housing" class="img-fluid mb-3">
+                <h5>Priority Shelter Subscription</h5>
+                <p>₦50,000.00</p>
+                <p>Take the first step toward owning your dream home with the Damascus Projects Priority Shelter Program. This subscription grants you full access to our flexible, installment-based housing initiative designed to make homeownership achievable, structured, and stress-free.</p>
+                <p>📝 Subscription Fee: ₦21,000<br>(Please note: Your subscription will remain pending until payment has been confirmed.)</p>
+                <p>✅ What This Subscription Includes:</p>
+                <ul>
+                    <li>Access to the official housing application form</li>
+                    <li>Eligibility screening and verification</li>
+                    <li>Personalized housing recommendations based on your preferences and income</li>
+                    <li>Structured payment plans tailored to your financial capacity</li>
+                    <li>Full support from application through to allocation and ownership</li>
+                    <li>Transparent processes with legal and administrative backing</li>
+                </ul>
+                <p>🏠 Best For:</p>
+                <ul>
+                    <li>Individuals and families seeking affordable homeownership</li>
+                    <li>Low to middle-income earners who prefer paying in installments</li>
+                    <li>Anyone ready to move from renting to owning with peace of mind</li>
+                </ul>
+                <p>With Damascus Projects, your journey to a secured and structured homeownership experience begins now.</p>
+                <a href="{{ url_for('payment_details', program_slug='housing') }}" class="btn btn-primary mt-3">
+                    Subscribe Now
+                </a>
+                <p class="mt-2">Category: Subscriptions</p>
+        `,
+        "investor": `
+            <h4>Investor Subscription</h4>
+            <p>🔍 Purchasing this subscription will provide access to Investor Subscription</p>
+            <div class="mb-3">
+                <img src="https://www.damascusprojects.com/wp-content/uploads/2025/06/Avoid-these-New-Business-Mistakes.jpg" alt="Investor" class="img-fluid mb-3">
+                <h5>Investors Subscription</h5>
+                <p>₦499,999.00</p>
+                <p>This subscription empowers Damascus Projects to orchestrate daily operations that are instrumental in meticulously analyzing and selecting the most appropriate projects tailored to your needs. This fund serves as a vital resource, enabling comprehensive security assessments as you navigate the journey of identifying and establishing a business. It encompasses detailed feasibility studies along with a suite of robust measures designed to mitigate risks and safeguard against potential setbacks, ensuring a pathway to success that is as secure as it is promising.</p>
+                <a href="{{ url_for('payment_details', program_slug='investor') }}" class="btn btn-primary mt-3">
+                    Subscribe Now
+                </a>
+                <p class="mt-2">Category: Subscriptions</p>
+        `,
+        "visa": `
+            <h4>Visa Sponsorship Subscription</h4>
+            <p>🔍 Purchasing this subscription will provide access to Visa Sponsorship Subscription</p>
+            <div class="mb-3">
+                <img src="{{ url_for('static', filename='images/visa.jpg') }}" alt="Visa Sponsorship" class="img-fluid mb-3">
+            </div>
+            <h5>Visa Sponsorship Subscription</h5>
+            <p>₦37,000.00</p>
+            <p>Embark on your journey to international work or study opportunities with confidence through the Damascus Projects Visa Sponsorship Program. This subscription is your official entry point into a carefully guided process that connects you with global institutions, employers, and opportunities suited to your background and goals.</p>
+            <p>📝 Subscription Fee: ₦21,000<br>(Please note: Your subscription will remain pending until payment has been confirmed.)</p>
+            <p>✅ What This Subscription Includes:</p>
+            <ul>
+                <li>Access to the official application form</li>
+                <li>Review and profiling of your information to match available opportunities</li>
+                <li>Eligibility assessment and documentation guidance</li>
+                <li>Verified visa sponsorship leads for jobs or academic programs</li>
+                <li>Professional support and consultation throughout the process</li>
+            </ul>
+            <p>🌍 Best For:</p>
+            <ul>
+                <li>Job seekers pursuing employment abroad</li>
+                <li>Students seeking international admission with visa support</li>
+                <li>Individuals planning relocation with valid migration intentions</li>
+            </ul>
+            <p>With Damascus Projects, your global vision gets the structure, guidance, and support it needs to become a reality.</p>
+            <a href="{{ url_for('payment_details', program_slug='visa') }}" class="btn btn-primary mt-3">
+                Subscribe Now
+            </a>
+            <p class="mt-2">Category: Subscriptions</p>
+        `,
+        "innovator": `
+            <h4>Innovator or Idea Owner Subscription</h4>
+            <p>🔍 Purchasing this subscription will provide access to Innovator or Idea Owner Subscription</p>
+            <div class="mb-3">
+                <img src="{{ url_for('static', filename='images/investor.jpg') }}" alt="Innovator" class="img-fluid mb-3">
+            </div>
+            <h5>Innovator or Idea Owner Subscription</h5>
+            <p>₦21,500.00</p>
+            <p>Damascus Projects provides specialized support for innovators and idea owners ready to transform concepts into structured ventures. This subscription unlocks a tailored process that moves your ideas from paper to profit, ensuring your initiative is strategically planned, legally protected, and investor-ready.</p>
+            <p>📝 Subscription Fee: ₦21,000<br>(Pending until payment is confirmed)</p>
+            <p>✅ What This Subscription Includes:</p>
+            <ul>
+                <li>Access to the official innovation submission form</li>
+                <li>Project feasibility analysis and business model structuring</li>
+                <li>IP advisory and legal protection pathways</li>
+                <li>Preparation of investor decks and market approach strategies</li>
+                <li>Guidance on prototyping, partnerships, and scaling opportunities</li>
+            </ul>
+            <p>💡 Perfect for:</p>
+            <ul>
+                <li>Inventors, creators, and entrepreneurs with viable concepts</li>
+                <li>Businesses looking to diversify into innovative areas</li>
+                <li>Anyone with an idea seeking to professionally develop and launch it</li>
+            </ul>
+            <p>Subscribe now and let your vision gain the clarity, protection, and roadmap it needs to flourish.</p>
+            <a href="{{ url_for('payment_details', program_slug='innovator') }}" class="btn btn-primary mt-3">
+                Subscribe Now
+            </a>
+            <p class="mt-2">Category: Subscriptions</p>
+        `
+    };
+
+    if(programSlug && programs[programSlug]) {
+        programContent.innerHTML = programs[programSlug];
+    } else if(programSlug === "hire") {
+        window.location.href = "{{ url_for('hire_purchase') }}";
+    } else {
+        programContent.innerHTML = `<p class="text-danger">Invalid program selected or missing program identifier. Please go back and choose again.</p>`;
+    }
+});
+</script>
+{% endblock %}

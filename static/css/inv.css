@@ -1,0 +1,189 @@
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 20px;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    position: relative;
+    text-align: center;
+}
+
+.page-header::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* dark overlay for readability */
+}
+
+.page-header .container {
+    position: relative;
+    z-index: 2;
+}
+
+.page-header .page-title {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.page-header .breadcrumbs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    gap: 8px;
+    font-size: 1rem;
+}
+
+.page-header .breadcrumbs li {
+    color: #eee;
+}
+
+.page-header .breadcrumbs li a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.page-header .breadcrumbs li.active {
+    color: #ddd;
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        padding: 60px 15px;
+    }
+    .page-header .page-title {
+        font-size: 2rem;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+.investor-intro {
+  padding: 80px 20px;
+  background: #f9f9f9;
+}
+
+.investor-intro .container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.investor-intro .text {
+  flex: 1 1 50%;
+}
+
+.investor-intro .text h5 {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.investor-intro .text h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.investor-intro .text p {
+  line-height: 1.7;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.investor-intro .image {
+  flex: 1 1 45%;
+  text-align: center;
+}
+
+.investor-intro .image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+  .investor-intro .container {
+    flex-direction: column;
+  }
+  .investor-intro .text, 
+  .investor-intro .image {
+    flex: 1 1 100%;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.about-damascus {
+  padding: 80px 20px;
+  background-color: #d8d6d6;
+}
+
+.about-damascus .container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 40px;
+}
+
+.about-damascus .image {
+  flex: 1 1 45%;
+  text-align: center;
+}
+
+.about-damascus .image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+}
+
+.about-damascus .text {
+  flex: 1 1 50%;
+}
+
+.about-damascus .text h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.about-damascus .text p {
+  line-height: 1.8;
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .about-damascus .container {
+    flex-direction: column;
+  }
+  .about-damascus .image, 
+  .about-damascus .text {
+    flex: 1 1 100%;
+  }
+}

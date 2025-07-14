@@ -1,0 +1,18 @@
+<nav class="bottom-nav">
+  <a href="{{ url_for('choose_program') }}" class="{% if request.endpoint == 'choose_program' %}active{% endif %}">
+    <i class="fas fa-home"></i>
+    Home
+  </a>
+  <a href="{{ url_for('choose_program') }}" class="{% if request.endpoint == 'subscription' %}active{% endif %}">
+    <i class="fas fa-clipboard-list"></i>
+    Subscription
+  </a>
+  <a href="{{ url_for('contact') }}" class="{% if request.endpoint == 'contact' %}active{% endif %}">
+    <i class="fas fa-envelope"></i>
+    Contact
+  </a>
+  <a href="{{ url_for('dashboard') }}" class="{% if request.endpoint == 'dashboard' %}active{% endif %}">
+    <i class="fas fa-user"></i>
+    Account
+  </a>
+</nav>

@@ -1,0 +1,180 @@
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: #ffffff;
+  border-top: 1px solid #ddd;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1030;
+  box-shadow: 0 -1px 6px rgba(0, 0, 0, 0.1);
+}
+
+.bottom-nav a {
+  flex-grow: 1;
+  text-align: center;
+  color: #6c757d;
+  text-decoration: none;
+  font-size: 12px;
+  transition: all 0.3s;
+}
+
+.bottom-nav a i {
+  display: block;
+  font-size: 20px;
+  margin-bottom: 2px;
+}
+
+.bottom-nav a.active {
+  color: #0d6efd;
+  font-weight: 600;
+}
+
+.bottom-nav a.active i {
+  transform: scale(1.2);
+  color: #0d6efd;
+}
+
+.bottom-nav a:hover {
+  color: #0d6efd;
+}
+
+/* Optional tiny indicator under active link */
+.bottom-nav a.active::after {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 6px;
+  background: #0d6efd;
+  border-radius: 50%;
+  margin: 3px auto 0;
+}
+
+
+.ch-header {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+}
+
+.small {
+    font-size: 0.875rem;
+    color: #ffffff;
+}
+
+.py-5 {
+    justify-content: center;
+    text-align: center;
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    background: #053a8a;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.heading {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+}
+
+.card-body {
+    background: #ffffff;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-body:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.card-body h4 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: #2c3e50;
+}
+
+.card-body p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.card-body .btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.card-body .btn-primary {
+    background: #1e2a36;
+    border: none;
+}
+
+.card-body .btn-primary:hover {
+    background: #1e2a36;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 1.5rem;
+    }
+    .card-body h4 {
+        font-size: 1.3rem;
+    }
+    .card-body p {
+        font-size: 0.95rem;
+    }
+}
+
+
+.form-data {
+    color: #333;
+    text-align: left;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.program-box {
+            background: #fff;
+            color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+            transition: box-shadow 0.3s ease;
+            background-color: #053a8a;
+        }

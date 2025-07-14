@@ -1,0 +1,100 @@
+{% extends "dashboard_base.html" %}
+
+{% block title %}Contact Us - Damascus Projects & Services{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<div class="modern-page-header text-white text-center d-flex align-items-center" style="background: url('https://www.damascusprojects.com/wp-content/uploads/2025/05/bg-pheader.jpg') center/cover no-repeat; height: 250px;">
+  <div class="container">
+    <h1 class="display-5 fw-bold">Contacts</h1>
+  </div>
+</div>
+
+<!-- Contact Info & Form -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row g-5" style="text-align: left;">
+      <!-- Contact Info -->
+      <div class="col-lg-5">
+        <div class="mb-4">
+          <span class="text-primary small text-uppercase">// contact details</span>
+          <h2 class="fw-bold">Contact Us</h2>
+          <p class="text-muted">Give us a call or drop by anytime. We answer all enquiries within 24 hours on business days.</p>
+        </div>
+
+        <div class="mb-4 d-flex">
+          <i class="fas fa-map-marker-alt fa-lg text-primary me-3 mt-1"></i>
+          <div>
+            <h6 class="mb-1 fw-semibold">Head Office:</h6>
+            <p class="mb-0">Plot 78, Block 28, Babatope Bejide Crescent, Lekki Phase 1, Lagos</p>
+          </div>
+        </div>
+
+        <div class="mb-4 d-flex">
+          <i class="fas fa-map-marker-alt fa-lg text-primary me-3 mt-1"></i>
+          <div>
+            <h6 class="mb-1 fw-semibold">Branch Office:</h6>
+            <p class="mb-0">26 Ojike Street, Umuahia, Abia State</p>
+          </div>
+        </div>
+
+        <div class="mb-4 d-flex">
+          <i class="fas fa-envelope fa-lg text-primary me-3 mt-1"></i>
+          <div>
+            <h6 class="mb-1 fw-semibold">Our Mailbox:</h6>
+            <p class="mb-0">info@damascusprojects.com</p>
+          </div>
+        </div>
+
+        <div class="d-flex">
+          <i class="fas fa-phone fa-lg text-primary me-3 mt-1"></i>
+          <div>
+            <h6 class="mb-1 fw-semibold">Our Phone:</h6>
+            <p class="mb-0">+234-906-7377-910</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="col-lg-7">
+        <div class="bg-white rounded shadow-sm p-4">
+          <h3 class="mb-3">Ready to Get Started?</h3>
+          <p class="text-muted mb-4">Your email address will not be published. Required fields are marked *</p>
+          <form action="#" method="post">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <input type="text" name="your-name" class="form-control" placeholder="Your Name *" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <input type="email" name="your-email" class="form-control" placeholder="Your Email *" required>
+              </div>
+            </div>
+            <div class="mb-3">
+              <textarea name="your-message" class="form-control" rows="5" placeholder="Your Message..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Google Map -->
+<section class="mt-5">
+  <div class="container-fluid px-0">
+    <iframe
+      src="https://maps.google.com/maps?q=Plot%2078%2C%20Block%2028%2C%20Babatope%20Bejide%20Crescent%2C%20Lekki%20Phase%201%2C%20Lekki%20Lagos&t=m&z=10&output=embed&iwloc=near"
+      width="100%"
+      height="400"
+      style="border:0;"
+      allowfullscreen=""
+      loading="lazy"
+      title="Damascus Projects Lekki"
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
+  </div>
+</section>
+
+{% endblock %}

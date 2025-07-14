@@ -1,0 +1,20 @@
+{% extends "dashboard_base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h3 class="mb-4 ch-header">CHOOSE YOUR PROGRAM</h3>
+  <div class="row">
+    {% for program in programs %}
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 text-center">
+        <div class="card-body">
+          <i class="{{ program.icon }} fa-2x mb-3"></i>
+          <h5 class="card-title">{{ program.name }}</h5>
+          <p>₦{{ "{:,.0f}".format(program.price) }}</p>
+          <a href="{{ url_for('program_detail', slug=program.slug) }}" class="btn btn-primary">View Details</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

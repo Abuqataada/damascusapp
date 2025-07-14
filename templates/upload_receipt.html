@@ -1,0 +1,52 @@
+{% extends "dashboard_base.html" %}
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8 col-sm-10">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <h3 class="mb-4 text-center">
+            <i class="fas fa-upload me-2"></i> Upload Payment Receipt
+          </h3>
+          <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+            <div class="mb-3">
+              <label for="receipt" class="form-label">Select Receipt File</label>
+              <input type="file" class="form-control" id="receipt" name="receipt" required>
+              <div class="invalid-feedback">
+                Please select a receipt file to upload.
+              </div>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-success btn-lg">
+                <i class="fas fa-cloud-upload-alt me-2"></i> Upload Receipt
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="text-center mt-4">
+        <a href="{{ url_for('choose_program') }}" class="btn btn-outline-secondary">
+          <i class="fas fa-arrow-left me-2"></i> Back to Programs
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Bootstrap validation
+  (() => {
+    'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>
+{% endblock %}

@@ -1,0 +1,195 @@
+.page-header {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    padding: 100px 0;
+    color: #fff;
+    text-align: center;
+}
+
+.page-header .container {
+    position: relative;
+    z-index: 2;
+}
+
+.page-header .page-title {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.breadcrumbs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+}
+
+.breadcrumbs li {
+    margin: 0 5px;
+}
+
+.breadcrumbs li::after {
+    content: "/";
+    margin-left: 5px;
+}
+
+.breadcrumbs li:last-child::after {
+    content: "";
+}
+
+.breadcrumbs a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.visa-sponsorship-section {
+    padding: 80px 0;
+    background-color: #f9f9f9;
+}
+
+.visa-sponsorship-section .container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+.visa-sponsorship-section .text-column {
+    flex: 1 1 50%;
+}
+
+.visa-sponsorship-section .image-column {
+    flex: 1 1 45%;
+}
+
+.visa-sponsorship-section h5 {
+    font-size: 20px;
+    color: #007bff;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.visa-sponsorship-section h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.visa-sponsorship-section p {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.visa-sponsorship-section img {
+    border-radius: 8px;
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .visa-sponsorship-section .container {
+        flex-direction: column;
+    }
+    .visa-sponsorship-section .text-column,
+    .visa-sponsorship-section .image-column {
+        flex: 1 1 100%;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.subscription-requirement-section {
+    padding: 80px 0;
+    background-color: #d8d6d6;
+}
+
+.subscription-requirement-section .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.subscription-requirement-section .image-column {
+    flex: 1 1 50%;
+}
+
+.subscription-requirement-section .text-column {
+    flex: 1 1 45%;
+}
+
+.subscription-requirement-section h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.subscription-requirement-section p {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.subscription-requirement-section blockquote {
+    background: #f9f9f9;
+    padding: 20px;
+    border-left: 4px solid #007bff;
+    font-size: 15px;
+    color: #555;
+    margin: 0;
+    border-radius: 4px;
+}
+
+.subscription-requirement-section img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+    .subscription-requirement-section .container {
+        flex-direction: column;
+    }
+    .subscription-requirement-section .image-column,
+    .subscription-requirement-section .text-column {
+        flex: 1 1 100%;
+    }
+}

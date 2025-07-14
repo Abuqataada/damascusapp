@@ -1,0 +1,140 @@
+.faqs-header {
+    background-size: cover;
+    background-position: center;
+    padding: 80px 20px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.faqs-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.faqs-inner {
+    background: rgba(0, 0, 0, 0.5); /* subtle overlay for readability */
+    padding: 30px;
+    border-radius: 8px;
+}
+
+.faqs-title {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.faqs-breadcrumbs {
+    list-style: none;
+    padding: 0;
+    display: inline-flex;
+    gap: 8px;
+    font-size: 16px;
+}
+
+.faqs-breadcrumbs li {
+    color: #fff;
+}
+
+.faqs-breadcrumbs li a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.faqs-breadcrumbs li.active {
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.faqs-main-section {
+    padding: 80px 20px;
+    background: #f9f9f9;
+}
+
+.faqs-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.faqs-header-block {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.faqs-subtitle {
+    display: block;
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.faqs-main-title {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.faqs-grid {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.faqs-column {
+    flex: 1;
+    min-width: 300px;
+}
+
+.faq-item {
+    margin-bottom: 20px;
+}
+
+.faq-question {
+    width: 100%;
+    background: #fff;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    font-size: 18px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.faq-question:hover {
+    border-color: #333;
+    background: #f1f1f1;
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.3s ease;
+    background: #fff;
+    border-left: 2px solid #333;
+    padding: 0 15px;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 500px;
+    padding: 15px;
+}

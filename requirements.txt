@@ -1,0 +1,9 @@
+asposestorage
+Flask
+Flask_Login
+Flask_Migrate
+flask_sqlalchemy
+Pillow
+Werkzeug
+gunicorn
+psycopg2
