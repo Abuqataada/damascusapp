@@ -4,29 +4,6 @@
 
 {% block content %}
 
-<!-- Auth Buttons -->
-<div class="container-fluid p-0">
-  <div class="row g-0">
-    <!-- Login Button -->
-    <div class="col-6">
-      <a href="{{ url_for('login') }}" 
-         class="d-block btn btn-light rounded-0 py-3 text-center"
-         style="border: none; background-color: white; color: #333;">
-         Login
-      </a>
-    </div>
-    
-    <!-- Sign Up Button -->
-    <div class="col-6">
-      <a href="{{ url_for('signup') }}" 
-         class="d-block btn btn-light rounded-0 py-3 text-center"
-         style="border: none; background-color: white; color: #333;">
-         Sign Up
-      </a>
-    </div>
-  </div>
-</div>
-
 <!-- Hero Section with Image and Auth Buttons -->
 <section id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="6000">
   <!-- Indicators -->
@@ -43,6 +20,17 @@
         <div class="carousel-caption text-center">
           <h1 class="display-3 display-md-2 display-lg-1 animate__animated animate__fadeInDown">Innovator or Idea Owner</h1>
           <p class="lead fs-4 fs-md-3 fs-lg-2 animate__animated animate__fadeInUp">From Concept to Company — Let Damascus Projects Bring Your Business to Life.</p>
+          
+          <!-- Auth Buttons - Vertical Layout -->
+          <div class="auth-buttons mt-4">
+            <a href="{{ url_for('login') }}" 
+               class="btn btn-primary btn-lg px-5 py-2 mb-2">
+               Login
+            </a>
+            <p class="text-white mt-2">Don't have an account? 
+              <a href="{{ url_for('signup') }}" class="text-white fw-bold">Sign up</a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -53,6 +41,16 @@
         <div class="carousel-caption text-center">
           <h1 class="display-3 display-md-2 display-lg-1 animate__animated animate__fadeInDown">Visa Sponsorship</h1>
           <p class="lead fs-4 fs-md-3 fs-lg-2 animate__animated animate__fadeInUp">From Application to Arrival — Trusted Visa Sponsorship by Damascus Projects.</p>
+          
+          <div class="auth-buttons mt-4">
+            <a href="{{ url_for('login') }}" 
+               class="btn btn-primary btn-lg px-5 py-2 mb-2">
+               Login
+            </a>
+            <p class="text-white mt-2">Don't have an account? 
+              <a href="{{ url_for('signup') }}" class="text-white fw-bold">Sign up</a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -63,6 +61,16 @@
         <div class="carousel-caption text-center">
           <h1 class="display-3 display-md-2 display-lg-1 animate__animated animate__fadeInDown">Priority Housing</h1>
           <p class="lead fs-4 fs-md-3 fs-lg-2 animate__animated animate__fadeInUp">Affordable. Reliable. Yours — Damascus Projects Makes Home Possible.</p>
+          
+          <div class="auth-buttons mt-4">
+            <a href="{{ url_for('login') }}" 
+               class="btn btn-primary btn-lg px-5 py-2 mb-2">
+               Login
+            </a>
+            <p class="text-white mt-2">Don't have an account? 
+              <a href="{{ url_for('signup') }}" class="text-white fw-bold">Sign up</a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -73,6 +81,16 @@
         <div class="carousel-caption text-center">
           <h1 class="display-3 display-md-2 display-lg-1 animate__animated animate__fadeInDown">Hire Purchase</h1>
           <p class="lead fs-4 fs-md-3 fs-lg-2 animate__animated animate__fadeInUp">Empowering Growth Through Easy Access to Heavy Equipment — Farm & Construction Vehicles on Hire Purchase.</p>
+          
+          <div class="auth-buttons mt-4">
+            <a href="{{ url_for('login') }}" 
+               class="btn btn-primary btn-lg px-5 py-2 mb-2">
+               Login
+            </a>
+            <p class="text-white mt-2">Don't have an account? 
+              <a href="{{ url_for('signup') }}" class="text-white fw-bold">Sign up</a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -83,6 +101,16 @@
         <div class="carousel-caption text-center">
           <h1 class="display-3 display-md-2 display-lg-1 animate__animated animate__fadeInDown">Investor</h1>
           <p class="lead fs-4 fs-md-3 fs-lg-2 animate__animated animate__fadeInUp">Invest Smart, Grow Bigger — Damascus Projects Handles the Work, You Reap the Rewards.</p>
+          
+          <div class="auth-buttons mt-4">
+            <a href="{{ url_for('login') }}" 
+               class="btn btn-primary btn-lg px-5 py-2 mb-2">
+               Login
+            </a>
+            <p class="text-white mt-2">Don't have an account? 
+              <a href="{{ url_for('signup') }}" class="text-white fw-bold">Sign up</a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -93,6 +121,16 @@
         <div class="carousel-caption text-center">
           <h1 class="display-3 display-md-2 display-lg-1 animate__animated animate__fadeInDown">Project Management</h1>
           <p class="lead fs-4 fs-md-3 fs-lg-2 animate__animated animate__fadeInUp">From Planning to Execution — Damascus Projects Turns Your Vision into Reality.</p>
+          
+          <div class="auth-buttons mt-4">
+            <a href="{{ url_for('login') }}" 
+               class="btn btn-primary btn-lg px-5 py-2 mb-2">
+               Login
+            </a>
+            <p class="text-white mt-2">Don't have an account? 
+              <a href="{{ url_for('signup') }}" class="text-white fw-bold">Sign up</a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
