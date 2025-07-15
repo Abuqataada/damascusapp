@@ -1,8 +1,18 @@
 {% extends "base.html" %}
 
 {% block head %}
-  {{ super() }}  {# This keeps all the existing head content from base.html #}
+  {{ super() }}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+  <style>
+    /* Additional inline styles for full coverage */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      padding-bottom: 60px; /* Adjust based on navbar height */
+    }
+  </style>
 {% endblock %}
 
 {% block title %}Damascus Projects & Services{% endblock %}
@@ -10,7 +20,7 @@
 {% block content %}
 
 <!-- Hero Section with Image and Auth Buttons -->
-<section id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="6000">
+<section id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000">
   <!-- Indicators -->
   <div class="carousel-indicators">
     {% for i in range(6) %}
@@ -142,7 +152,7 @@
   </div>
 </section>
 
-  <!-- Bottom navbar -->
-  {% include 'dashboard_navbar.html' %}
+<!-- Bottom navbar -->
+{% include 'dashboard_navbar.html' %}
 
 {% endblock %}
