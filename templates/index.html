@@ -4,11 +4,29 @@
 
 {% block content %}
 
-    <!-- Auth Button -->
-    <div class="d-flex justify-content-center gap-3">
-      <a href="/login" class="btn btn-primary btn-lg px-4">Login/Sign Up</a>
+<!-- Auth Buttons -->
+<div class="container-fluid p-0">
+  <div class="row g-0">
+    <!-- Login Button -->
+    <div class="col-6">
+      <a href="{{ url_for('login') }}" 
+         class="d-block btn btn-light rounded-0 py-3 text-center"
+         style="border: none; background-color: white; color: #333;">
+         Login
+      </a>
+    </div>
+    
+    <!-- Sign Up Button -->
+    <div class="col-6">
+      <a href="{{ url_for('signup') }}" 
+         class="d-block btn btn-light rounded-0 py-3 text-center"
+         style="border: none; background-color: white; color: #333;">
+         Sign Up
+      </a>
     </div>
   </div>
+</div>
+
 <!-- Hero Section with Image and Auth Buttons -->
 <section id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="6000">
   <!-- Indicators -->
@@ -19,94 +37,85 @@
   </div>
 
   <div class="carousel-inner">
-    <!-- Example Slide -->
+    <!-- Slide 1 -->
     <div class="carousel-item active">
-      <div class="hero-slide" style="background-image: url({{ url_for('static', filename='images/project_management.jpg') }});">
+      <div class="hero-slide" style="background-image: url({{ url_for('static', filename='images/1.webp') }});">
         <div class="overlay"></div>
-        <div class="container">
-          <div class="carousel-caption">
-            <h1 class="animate__animated animate__fadeInDown">Innovator or Idea Owner</h1>
-            <p class="animate__animated animate__fadeInUp">From Concept to Company — Let Damascus Projects Bring Your Business to Life.</p>
+        <div class="container h-100 d-flex align-items-center justify-content-center">
+          <div class="carousel-caption text-center">
+            <h1 class="display-3 display-md-2 display-lg-1 animate__animated animate__fadeInDown">Innovator or Idea Owner</h1>
+            <p class="lead fs-4 fs-md-3 fs-lg-2 animate__animated animate__fadeInUp">From Concept to Company — Let Damascus Projects Bring Your Business to Life.</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Repeat similar for other slides -->
+    <!-- Slide 2 -->
     <div class="carousel-item">
-      <div class="hero-slide" style="background-image: url('{{ url_for('static', filename='images/visa.jpg') }}');">
+      <div class="hero-slide" style="background-image: url('{{ url_for('static', filename='images/2.png') }}');">
         <div class="overlay"></div>
-        <div class="container">
-          <div class="carousel-caption">
-            <h1 class="animate__animated animate__fadeInDown">Visa Sponsorship</h1>
-            <p class="animate__animated animate__fadeInUp">From Application to Arrival — Trusted Visa Sponsorship by Damascus Projects.</p>
+        <div class="container h-100 d-flex align-items-center justify-content-center">
+          <div class="carousel-caption text-center">
+            <h1 class="display-3 display-md-2 display-lg-1 animate__animated animate__fadeInDown">Visa Sponsorship</h1>
+            <p class="lead fs-4 fs-md-3 fs-lg-2 animate__animated animate__fadeInUp">From Application to Arrival — Trusted Visa Sponsorship by Damascus Projects.</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Repeat other slides... -->
-    <!-- ... Priority Housing -->
+    <!-- Slide 3 -->
     <div class="carousel-item">
-      <div class="hero-slide" style="background-image: url('{{ url_for('static', filename='images/shelter.png') }}');">
+      <div class="hero-slide" style="background-image: url('{{ url_for('static', filename='images/3.jpg') }}');">
         <div class="overlay"></div>
-        <div class="container">
-          <div class="carousel-caption">
-            <h1 class="animate__animated animate__fadeInDown">Priority Housing</h1>
-            <p class="animate__animated animate__fadeInUp">Affordable. Reliable. Yours — Damascus Projects Makes Home Possible.</p>
+        <div class="container h-100 d-flex align-items-center justify-content-center">
+          <div class="carousel-caption text-center">
+            <h1 class="display-3 display-md-2 display-lg-1 animate__animated animate__fadeInDown">Priority Housing</h1>
+            <p class="lead fs-4 fs-md-3 fs-lg-2 animate__animated animate__fadeInUp">Affordable. Reliable. Yours — Damascus Projects Makes Home Possible.</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Repeat Project Management, Hire Purchase, Investor similarly -->
+    <!-- Slide 4 -->
     <div class="carousel-item">
-      <div class="hero-slide" style="background-image: url('{{ url_for('static', filename='images/hire_purchase.jpg') }}');">
+      <div class="hero-slide" style="background-image: url('{{ url_for('static', filename='images/4.jpg') }}');">
         <div class="overlay"></div>
-        <div class="container">
-          <div class="carousel-caption">
-            <h1 class="animate__animated animate__fadeInDown">Hire Purchase</h1>
-            <p class="animate__animated animate__fadeInUp">Empowering Growth Through Easy Access to Heavy Equipment — Farm & Construction Vehicles on Hire Purchase.</p>
+        <div class="container h-100 d-flex align-items-center justify-content-center">
+          <div class="carousel-caption text-center">
+            <h1 class="display-3 display-md-2 display-lg-1 animate__animated animate__fadeInDown">Hire Purchase</h1>
+            <p class="lead fs-4 fs-md-3 fs-lg-2 animate__animated animate__fadeInUp">Empowering Growth Through Easy Access to Heavy Equipment — Farm & Construction Vehicles on Hire Purchase.</p>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- Slide 5 -->
     <div class="carousel-item">
-      <div class="hero-slide" style="background-image: url('{{ url_for('static', filename='images/investor.jpg') }}');">
+      <div class="hero-slide" style="background-image: url('{{ url_for('static', filename='images/5.png') }}');">
         <div class="overlay"></div>
-        <div class="container">
-          <div class="carousel-caption">
-            <h1 class="animate__animated animate__fadeInDown">Investor</h1>
-            <p class="animate__animated animate__fadeInUp">Invest Smart, Grow Bigger — Damascus Projects Handles the Work, You Reap the Rewards.</p>
+        <div class="container h-100 d-flex align-items-center justify-content-center">
+          <div class="carousel-caption text-center">
+            <h1 class="display-3 display-md-2 display-lg-1 animate__animated animate__fadeInDown">Investor</h1>
+            <p class="lead fs-4 fs-md-3 fs-lg-2 animate__animated animate__fadeInUp">Invest Smart, Grow Bigger — Damascus Projects Handles the Work, You Reap the Rewards.</p>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- Slide 6 -->
     <div class="carousel-item">
-      <div class="hero-slide" style="background-image: url('{{ url_for('static', filename='images/project_management.jpg') }}');">
+      <div class="hero-slide" style="background-image: url('{{ url_for('static', filename='images/6.png') }}');">
         <div class="overlay"></div>
-        <div class="container">
-          <div class="carousel-caption">
-            <h1 class="animate__animated animate__fadeInDown">Project Management</h1>
-            <p class="animate__animated animate__fadeInUp">From Planning to Execution — Damascus Projects Turns Your Vision into Reality.</p>
+        <div class="container h-100 d-flex align-items-center justify-content-center">
+          <div class="carousel-caption text-center">
+            <h1 class="display-3 display-md-2 display-lg-1 animate__animated animate__fadeInDown">Project Management</h1>
+            <p class="lead fs-4 fs-md-3 fs-lg-2 animate__animated animate__fadeInUp">From Planning to Execution — Damascus Projects Turns Your Vision into Reality.</p>
           </div>
         </div>
       </div>
     </div>
-
   </div>
-
-  <!-- Controls -->
-  <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
 </section>
+
 
 {% endblock %}
