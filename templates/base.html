@@ -29,21 +29,25 @@
   {% block head %}{% endblock %}
 </head>
 <body>
+  <!-- Flash messages -->
+  <div class="container mt-3">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  
   <!-- Main Content -->
   <main>
     {% block content %}{% endblock %}
   </main>
-
-  <!-- Footer -->
-  <footer class="bg-dark text-white py-4">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 text-md-end" style="text-align: center;">
-          <p class="mb-0">&copy; <span id="current-year"></span> Damascus Projects.</p>
-        </div>
-      </div>
-    </div>
-  </footer>
 
   <!-- JavaScript Libraries -->
   <!-- Bootstrap Bundle with Popper -->

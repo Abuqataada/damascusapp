@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block head %}
+  {{ super() }}  {# This keeps all the existing head content from base.html #}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
 {% block title %}Damascus Projects & Services{% endblock %}
 
 {% block content %}
@@ -136,5 +141,8 @@
     </div>
   </div>
 </section>
+
+  <!-- Bottom navbar -->
+  {% include 'dashboard_navbar.html' %}
 
 {% endblock %}
