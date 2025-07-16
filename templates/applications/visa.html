@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: #f5f7ff;
+            color: var(--dark);
+            padding-bottom: 80px;
+        }
+        
+        .form-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+            overflow: hidden;
+        }
+        
+        .form-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            background-color: var(--light);
+        }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            flex: 1;
+        }
+        
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background-color: #dee2e6;
+            z-index: 1;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #adb5bd;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            z-index: 2;
+        }
+        
+        .step.active .step-number {
+            background-color: var(--primary);
+        }
+        
+        .step.completed .step-number {
+            background-color: var(--success);
+        }
+        
+        .step-label {
+            margin-top: 8px;
+            font-size: 0.75rem;
+            color: #6c757d;
+            text-align: center;
+        }
+        
+        .step.active .step-label,
+        .step.completed .step-label {
+            color: var(--dark);
+            font-weight: 500;
+        }
+        
+        .form-step {
+            padding: 1.5rem;
+            display: none;
+        }
+        
+        .form-step.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .form-title {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+        
+        .form-floating label {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 0.75rem;
+            border: 1px solid #ced4da;
+            font-size: 0.9rem;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary);
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .radio-option, .checkbox-option {
+            flex: 1 0 120px;
+        }
+        
+        .radio-option input[type="radio"], 
+        .checkbox-option input[type="checkbox"] {
+            display: none;
+        }
+        
+        .radio-option label, 
+        .checkbox-option label {
+            display: block;
+            padding: 0.75rem;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .radio-option input[type="radio"]:checked + label,
+        .checkbox-option input[type="checkbox"]:checked + label {
+            border-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .date-inputs {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .date-inputs .form-floating {
+            flex: 1;
+        }
+        
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .file-upload {
+            border: 2px dashed #ced4da;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .file-upload:hover {
+            border-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+        
+        .file-upload input {
+            display: none;
+        }
+        
+        .file-info {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-top: 0.5rem;
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 0.75rem 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-around;
+            z-index: 1000;
+            height: 60px;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 0.75rem;
+            padding: 0.25rem;
+            flex: 1;
+            max-width: 25%;
+        }
+        
+        .nav-item i {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .nav-item.active {
+            color: var(--primary);
+        }
+        
+        @media (max-width: 576px) {
+            .form-container {
+                border-radius: 0;
+                margin: 0;
+                box-shadow: none;
+            }
+            
+            .form-step {
+                padding: 1rem;
+            }
+            
+            .form-title {
+                font-size: 1.1rem;
+            }
+            
+            .radio-option, .checkbox-option {
+                flex: 1 0 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-3">
+        <div class="form-container">
+            <div class="form-header">
+                <h2>Application Form</h2>
+                <p>Complete all steps to submit your application</p>
+            </div>
+            
+            <div class="step-indicator">
+                <div class="step active" id="step1-indicator">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Personal Info</div>
+                </div>
+                <div class="step" id="step2-indicator">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Education & Travel</div>
+                </div>
+                <div class="step" id="step3-indicator">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Documents</div>
+                </div>
+            </div>
+            
+            <form id="multiStepForm">
+                <!-- Step 1: Personal Information -->
+                <div class="form-step active" id="step1">
+                    <h3 class="form-title">Personal Information</h3>
+                    
+                    <div class="row g-2">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
+                                <label for="firstName">First Name (Required)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
+                                <label for="lastName">Last Name (Required)</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="date-inputs mt-2">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="month" placeholder="MM" maxlength="2" required>
+                            <label for="month">MM</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="day" placeholder="DD" maxlength="2" required>
+                            <label for="day">DD</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="year" placeholder="YYYY" maxlength="4" required>
+                            <label for="year">YYYY</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-floating mt-2">
+                        <input type="text" class="form-control" id="nationality" placeholder="Nationality" required>
+                        <label for="nationality">Nationality (Required)</label>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <label class="form-label">Gender (Required)</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="male" name="gender" value="male" required>
+                                <label for="male">Male</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="female" name="gender" value="female">
+                                <label for="female">Female</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="other" name="gender" value="other">
+                                <label for="other">Other</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <label class="form-label">Marital Status (Required)</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="single" name="maritalStatus" value="single" required>
+                                <label for="single">Single</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="married" name="maritalStatus" value="married">
+                                <label for="married">Married</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="divorced" name="maritalStatus" value="divorced">
+                                <label for="divorced">Divorced</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="widowed" name="maritalStatus" value="widowed">
+                                <label for="widowed">Widowed</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-footer">
+                        <button type="button" class="btn btn-primary" onclick="nextStep(1)">Next</button>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Education & Travel -->
+                <div class="form-step" id="step2">
+                    <h3 class="form-title">Education & Travel Information</h3>
+                    
+                    <div class="form-floating">
+                        <select class="form-select" id="educationLevel" required>
+                            <option value="" selected disabled>Select Highest Education Level</option>
+                            <option value="highschool">High School</option>
+                            <option value="diploma">Diploma</option>
+                            <option value="bachelor">Bachelor's Degree</option>
+                            <option value="master">Master's Degree</option>
+                            <option value="phd">PhD</option>
+                        </select>
+                        <label for="educationLevel">Highest Level of Education (Required)</label>
+                    </div>
+                    
+                    <div class="form-floating mt-2">
+                        <input type="text" class="form-control" id="countryOfInterest" placeholder="Country" required>
+                        <label for="countryOfInterest">Country of Interest (Required)</label>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <label class="form-label">Purpose of Travel (Required)</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="study" name="travelPurpose" value="study" required>
+                                <label for="study">Study</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="work" name="travelPurpose" value="work">
+                                <label for="work">Work</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="family" name="travelPurpose" value="family">
+                                <label for="family">Family</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-floating mt-2">
+                        <select class="form-select" id="languageProficiency" required>
+                            <option value="" selected disabled>Select Language Proficiency</option>
+                            <option value="basic">Basic</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                            <option value="native">Native</option>
+                        </select>
+                        <label for="languageProficiency">Language Proficiency (Required)</label>
+                    </div>
+                    
+                    <div class="form-floating mt-2">
+                        <input type="text" class="form-control" id="passportNumber" placeholder="Passport Number" required>
+                        <label for="passportNumber">Passport Number (Required)</label>
+                    </div>
+                    
+                    <div class="form-footer">
+                        <button type="button" class="btn btn-outline-primary" onclick="prevStep(2)">Back</button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep(2)">Next</button>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Documents -->
+                <div class="form-step" id="step3">
+                    <h3 class="form-title">Documents & Contact</h3>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Resume/CV Upload (Required)</label>
+                        <div class="file-upload" id="resumeUpload">
+                            <i class="fas fa-cloud-upload-alt fa-2x mb-2"></i>
+                            <p>Click to upload or drag and drop</p>
+                            <input type="file" id="resume" accept=".pdf,.doc,.docx" required>
+                            <div class="file-info">Max. file size: 200 MB</div>
+                        </div>
+                        <div id="resumeFileName" class="text-muted small"></div>
+                    </div>
+                    
+                    <div class="form-floating">
+                        <input type="tel" class="form-control" id="phone" placeholder="Phone" required>
+                        <label for="phone">Phone (Required)</label>
+                    </div>
+                    
+                    <div class="form-floating mt-2">
+                        <input type="email" class="form-control" id="email" placeholder="Email" required>
+                        <label for="email">Email (Required)</label>
+                    </div>
+                    
+                    <div class="form-footer">
+                        <button type="button" class="btn btn-outline-primary" onclick="prevStep(3)">Back</button>
+                        <button type="submit" class="btn btn-primary">Submit Application</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-list-alt"></i>
+            <span>Subscriptions</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-envelope"></i>
+            <span>Contact</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>Account</span>
+        </a>
+    </nav>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function nextStep(currentStep) {
+            if (validateStep(currentStep)) {
+                document.getElementById(`step${currentStep}`).classList.remove('active');
+                document.getElementById(`step${currentStep + 1}`).classList.add('active');
+                
+                document.getElementById(`step${currentStep}-indicator`).classList.remove('active');
+                document.getElementById(`step${currentStep + 1}-indicator`).classList.add('active');
+                
+                document.querySelector('.form-container').scrollTo(0, 0);
+            }
+        }
+        
+        function prevStep(currentStep) {
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.getElementById(`step${currentStep - 1}`).classList.add('active');
+            
+            document.getElementById(`step${currentStep}-indicator`).classList.remove('active');
+            document.getElementById(`step${currentStep - 1}-indicator`).classList.add('active');
+            
+            document.querySelector('.form-container').scrollTo(0, 0);
+        }
+        
+        function validateStep(stepNumber) {
+            if (stepNumber === 1) {
+                const requiredFields = ['firstName', 'lastName', 'month', 'day', 'year', 'nationality'];
+                for (const field of requiredFields) {
+                    if (!document.getElementById(field).value) {
+                        alert(`Please fill in ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`);
+                        return false;
+                    }
+                }
+                
+                if (!document.querySelector('input[name="gender"]:checked') || 
+                    !document.querySelector('input[name="maritalStatus"]:checked')) {
+                    alert('Please select your gender and marital status');
+                    return false;
+                }
+            } else if (stepNumber === 2) {
+                const requiredFields = ['educationLevel', 'countryOfInterest', 'languageProficiency', 'passportNumber'];
+                for (const field of requiredFields) {
+                    if (!document.getElementById(field).value) {
+                        alert(`Please fill in ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`);
+                        return false;
+                    }
+                }
+                
+                if (!document.querySelector('input[name="travelPurpose"]:checked')) {
+                    alert('Please select your purpose of travel');
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+        // File upload handling
+        document.getElementById('resumeUpload').addEventListener('click', function() {
+            document.getElementById('resume').click();
+        });
+        
+        document.getElementById('resume').addEventListener('change', function(e) {
+            const fileName = e.target.files[0] ? e.target.files[0].name : 'No file chosen';
+            document.getElementById('resumeFileName').textContent = fileName;
+        });
+        
+        document.getElementById('multiStepForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate file upload
+            if (!document.getElementById('resume').files.length) {
+                alert('Please upload your resume/CV');
+                return;
+            }
+            
+            // Validate step 3 fields
+            const requiredFields = ['phone', 'email'];
+            for (const field of requiredFields) {
+                if (!document.getElementById(field).value) {
+                    alert(`Please fill in ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`);
+                    return;
+                }
+            }
+            
+            alert('Application submitted successfully!');
+            // Form submission logic would go here
+        });
+    </script>
+</body>
+</html>

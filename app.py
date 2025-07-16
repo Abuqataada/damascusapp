@@ -96,7 +96,8 @@ def create_initial_programs():
         {'name': 'Innovator or Idea Owner', 'slug': 'innovator', 'price': 21500, 'icon': 'fas fa-lightbulb'},
         {'name': 'Visa Sponsorship', 'slug': 'visa', 'price': 37500, 'icon': 'fas fa-passport'},
         {'name': 'Priority Housing', 'slug': 'housing', 'price': 50000, 'icon': 'fas fa-home'},
-        {'name': 'Hire Purchase', 'slug': 'hire', 'price': 21000, 'icon': 'fas fa-truck-pickup'}
+        {'name': 'Hire Purchase (Buyer)', 'slug': 'hireb', 'price': 21000, 'icon': 'fas fa-truck-pickup'},
+        {'name': 'Hire Purchase (Seller)', 'slug': 'hires', 'price': 21000, 'icon': 'fas fa-truck-pickup'}
     ]
     for prog in programs:
         if not Program.query.filter_by(slug=prog['slug']).first():
@@ -137,6 +138,25 @@ def home():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
+@app.route("/applications/<slug>")
+def apply_program(slug):
+    # Mapping slug to template
+    templates = {
+        "project_management": "applications/pm.html",
+        "visa": "applications/visa.html",
+        "investor": "applications/investor.html",
+        "innovator": "applications/innovator.html",
+        "housing": "applications/housing.html",
+        "hireb": "applications/hire-buyer.html",
+        "hires": "applications/hire-seller.html"
+    }
+
+    if slug in templates:
+        return render_template(templates[slug])
+    else:
+        flash("Invalid program selected.", "warning")
+        return redirect(url_for("dashboard"))
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():

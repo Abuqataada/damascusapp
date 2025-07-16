@@ -81,19 +81,29 @@
                     </p>
                     
                     {% if not user_sub.is_paid %}
-                    <div class="mt-auto">
-                        <div class="d-flex gap-2">
-                            <a href="{{ url_for('payment_details', program_slug=user_sub.program.slug) }}" 
-                              class="btn btn-outline-primary btn-sm flex-fill">
-                              Make Payment
-                            </a>
-                            <button class="btn btn-outline-danger btn-sm flex-fill"
-                              data-bs-toggle="modal" data-bs-target="#cancelModal{{ user_sub.id }}">
-                              Cancel
-                            </button>
+                        <div class="mt-auto">
+                            <div class="d-flex flex-wrap gap-2">
+                                <!-- Full width on mobile, auto on larger screens -->
+                                <a href="{{ url_for('payment_details', program_slug=user_sub.program.slug) }}" 
+                                class="btn btn-outline-primary btn-sm flex-fill flex-grow-1 flex-md-grow-0">
+                                Make Payment
+                                </a>
+                                
+                                <!-- Full width on mobile, auto on larger screens -->
+                                <button class="btn btn-outline-danger btn-sm flex-fill flex-grow-1 flex-md-grow-0"
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#cancelModal{{ user_sub.id }}">
+                                        Cancel
+                                </button>
+                                
+                                <!-- Full width on mobile, auto on larger screens -->
+                                <a href="{{ url_for('apply_program', slug=user_sub.program.slug) }}" 
+                                class="btn btn-primary btn-sm flex-fill flex-grow-1 flex-md-grow-0">
+                                Application Form
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    {% endif %}
+                        {% endif %}
                 </div>
             </div>
         </div>

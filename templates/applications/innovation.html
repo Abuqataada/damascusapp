@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Innovator Application Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: #f5f7ff;
+            color: var(--dark);
+            padding-bottom: 80px;
+        }
+        
+        .form-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+            overflow: hidden;
+        }
+        
+        .form-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            background-color: var(--light);
+        }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            flex: 1;
+        }
+        
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background-color: #dee2e6;
+            z-index: 1;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #adb5bd;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            z-index: 2;
+        }
+        
+        .step.active .step-number {
+            background-color: var(--primary);
+        }
+        
+        .step.completed .step-number {
+            background-color: var(--success);
+        }
+        
+        .step-label {
+            margin-top: 8px;
+            font-size: 0.75rem;
+            color: #6c757d;
+            text-align: center;
+        }
+        
+        .step.active .step-label,
+        .step.completed .step-label {
+            color: var(--dark);
+            font-weight: 500;
+        }
+        
+        .form-step {
+            padding: 1.5rem;
+            display: none;
+        }
+        
+        .form-step.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .form-title {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+        
+        .form-floating label {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 0.75rem;
+            border: 1px solid #ced4da;
+            font-size: 0.9rem;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary);
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .radio-option, .checkbox-option {
+            flex: 1 0 120px;
+        }
+        
+        .radio-option input[type="radio"], 
+        .checkbox-option input[type="checkbox"] {
+            display: none;
+        }
+        
+        .radio-option label, 
+        .checkbox-option label {
+            display: block;
+            padding: 0.75rem;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .radio-option input[type="radio"]:checked + label,
+        .checkbox-option input[type="checkbox"]:checked + label {
+            border-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .date-inputs {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .date-inputs .form-floating {
+            flex: 1;
+        }
+        
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .file-upload {
+            border: 2px dashed #ced4da;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .file-upload:hover {
+            border-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+        
+        .file-upload input {
+            display: none;
+        }
+        
+        .file-info {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-top: 0.5rem;
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 0.75rem 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-around;
+            z-index: 1000;
+            height: 60px;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 0.75rem;
+            padding: 0.25rem;
+            flex: 1;
+            max-width: 25%;
+        }
+        
+        .nav-item i {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .nav-item.active {
+            color: var(--primary);
+        }
+        
+        @media (max-width: 576px) {
+            .form-container {
+                border-radius: 0;
+                margin: 0;
+                box-shadow: none;
+            }
+            
+            .form-step {
+                padding: 1rem;
+            }
+            
+            .form-title {
+                font-size: 1.1rem;
+            }
+            
+            .radio-option, .checkbox-option {
+                flex: 1 0 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-3">
+        <div class="form-container">
+            <div class="form-header">
+                <h2>Innovator Application</h2>
+                <p>Complete all steps to submit your innovation idea</p>
+            </div>
+            
+            <div class="step-indicator">
+                <div class="step active" id="step1-indicator">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Personal Info</div>
+                </div>
+                <div class="step" id="step2-indicator">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Innovation Details</div>
+                </div>
+                <div class="step" id="step3-indicator">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Documents</div>
+                </div>
+            </div>
+            
+            <form id="multiStepForm">
+                <!-- Step 1: Personal Information -->
+                <div class="form-step active" id="step1">
+                    <h3 class="form-title">Personal Information</h3>
+                    
+                    <div class="row g-2">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
+                                <label for="firstName">First Name (Required)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
+                                <label for="lastName">Last Name (Required)</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-floating mt-2">
+                        <input type="email" class="form-control" id="email" placeholder="Email" required>
+                        <label for="email">Email (Required)</label>
+                    </div>
+                    
+                    <div class="form-floating mt-2">
+                        <input type="tel" class="form-control" id="phone" placeholder="Phone" required>
+                        <label for="phone">Phone (Required)</label>
+                    </div>
+                    
+                    <div class="form-footer">
+                        <button type="button" class="btn btn-primary" onclick="nextStep(1)">Next</button>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Innovation Details -->
+                <div class="form-step" id="step2">
+                    <h3 class="form-title">Innovation Details</h3>
+                    
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="innovationTitle" placeholder="Innovation Title" required>
+                        <label for="innovationTitle">Innovation Title (Required)</label>
+                    </div>
+                    
+                    <div class="form-floating mt-2">
+                        <textarea class="form-control" id="innovationDescription" placeholder="Description" style="height: 120px" required></textarea>
+                        <label for="innovationDescription">Detailed Description (Required)</label>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <label class="form-label">Innovation Stage (Required)</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="concept" name="innovationStage" value="concept" required>
+                                <label for="concept">Concept</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="prototype" name="innovationStage" value="prototype">
+                                <label for="prototype">Prototype</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="patented" name="innovationStage" value="patented">
+                                <label for="patented">Patented</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="market" name="innovationStage" value="market">
+                                <label for="market">Market Ready</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-floating mt-2">
+                        <select class="form-select" id="industry" required>
+                            <option value="" selected disabled>Select Industry</option>
+                            <option value="tech">Technology</option>
+                            <option value="health">Healthcare</option>
+                            <option value="energy">Energy</option>
+                            <option value="agriculture">Agriculture</option>
+                            <option value="education">Education</option>
+                            <option value="manufacturing">Manufacturing</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <label for="industry">Industry (Required)</label>
+                    </div>
+                    
+                    <div class="form-footer">
+                        <button type="button" class="btn btn-outline-primary" onclick="prevStep(2)">Back</button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep(2)">Next</button>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Documents -->
+                <div class="form-step" id="step3">
+                    <h3 class="form-title">Documents & Additional Info</h3>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Innovation Proposal (Required)</label>
+                        <div class="file-upload" id="proposalUpload">
+                            <i class="fas fa-cloud-upload-alt fa-2x mb-2"></i>
+                            <p>Click to upload or drag and drop</p>
+                            <input type="file" id="proposal" accept=".pdf,.doc,.docx,.ppt,.pptx" required>
+                            <div class="file-info">PDF, DOC, PPT (Max. 200 MB)</div>
+                        </div>
+                        <div id="proposalFileName" class="text-muted small"></div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Supporting Documents (Optional)</label>
+                        <div class="file-upload" id="supportingUpload">
+                            <i class="fas fa-cloud-upload-alt fa-2x mb-2"></i>
+                            <p>Click to upload or drag and drop</p>
+                            <input type="file" id="supportingDocs" accept=".pdf,.doc,.docx,.jpg,.png" multiple>
+                            <div class="file-info">Images, PDFs (Max. 200 MB total)</div>
+                        </div>
+                        <div id="supportingFileNames" class="text-muted small"></div>
+                    </div>
+                    
+                    <div class="form-floating">
+                        <input type="url" class="form-control" id="website" placeholder="Website">
+                        <label for="website">Website (Optional)</label>
+                    </div>
+                    
+                    <div class="form-check mt-3">
+                        <input class="form-check-input" type="checkbox" id="terms" required>
+                        <label class="form-check-label" for="terms">
+                            I agree to the terms and conditions
+                        </label>
+                    </div>
+                    
+                    <div class="form-footer">
+                        <button type="button" class="btn btn-outline-primary" onclick="prevStep(3)">Back</button>
+                        <button type="submit" class="btn btn-primary">Submit Application</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active">
+            <i class="fas fa-lightbulb"></i>
+            <span>Innovations</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-comments"></i>
+            <span>Feedback</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-envelope"></i>
+            <span>Messages</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </nav>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // File upload handling
+        document.getElementById('proposalUpload').addEventListener('click', function() {
+            document.getElementById('proposal').click();
+        });
+        
+        document.getElementById('proposal').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name || 'No file selected';
+            document.getElementById('proposalFileName').textContent = fileName;
+        });
+        
+        document.getElementById('supportingUpload').addEventListener('click', function() {
+            document.getElementById('supportingDocs').click();
+        });
+        
+        document.getElementById('supportingDocs').addEventListener('change', function(e) {
+            const files = e.target.files;
+            if (files.length === 0) {
+                document.getElementById('supportingFileNames').textContent = 'No files selected';
+            } else if (files.length === 1) {
+                document.getElementById('supportingFileNames').textContent = files[0].name;
+            } else {
+                document.getElementById('supportingFileNames').textContent = `${files.length} files selected`;
+            }
+        });
+        
+        // Form step navigation
+        function nextStep(currentStep) {
+            if (validateStep(currentStep)) {
+                document.getElementById(`step${currentStep}`).classList.remove('active');
+                document.getElementById(`step${currentStep}-indicator`).classList.remove('active');
+                document.getElementById(`step${currentStep}-indicator`).classList.add('completed');
+                
+                document.getElementById(`step${currentStep + 1}`).classList.add('active');
+                document.getElementById(`step${currentStep + 1}-indicator`).classList.add('active');
+            }
+        }
+        
+        function prevStep(currentStep) {
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.getElementById(`step${currentStep}-indicator`).classList.remove('active');
+            
+            document.getElementById(`step${currentStep - 1}`).classList.add('active');
+            document.getElementById(`step${currentStep - 1}-indicator`).classList.add('active');
+        }
+        
+        function validateStep(step) {
+            // Basic validation - in a real app you'd want more comprehensive validation
+            if (step === 1) {
+                const firstName = document.getElementById('firstName').value;
+                const lastName = document.getElementById('lastName').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                
+                if (!firstName || !lastName || !email || !phone) {
+                    alert('Please fill in all required fields');
+                    return false;
+                }
+            } else if (step === 2) {
+                const title = document.getElementById('innovationTitle').value;
+                const description = document.getElementById('innovationDescription').value;
+                const stage = document.querySelector('input[name="innovationStage"]:checked');
+                const industry = document.getElementById('industry').value;
+                
+                if (!title || !description || !stage || !industry) {
+                    alert('Please fill in all required fields');
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+        // Form submission
+        document.getElementById('multiStepForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate final step
+            if (!document.getElementById('proposal').files.length || !document.getElementById('terms').checked) {
+                alert('Please upload your proposal and agree to the terms');
+                return;
+            }
+            
+            // In a real app, you would submit the form data to your server here
+            alert('Application submitted successfully!');
+            
+            // Reset form
+            this.reset();
+            document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
+            document.getElementById('step1').classList.add('active');
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('active', 'completed');
+            });
+            document.getElementById('step1-indicator').classList.add('active');
+            
+            // Clear file names
+            document.getElementById('proposalFileName').textContent = '';
+            document.getElementById('supportingFileNames').textContent = '';
+        });
+    </script>
+</body>
+</html>
