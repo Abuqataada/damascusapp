@@ -75,6 +75,11 @@
                         Status: 
                         {% if user_sub.is_paid %}
                             <span class="badge bg-success">Active</span>
+                            <!-- Full width on mobile, auto on larger screens -->
+                                <a href="{{ url_for('apply_program', slug=user_sub.program.slug) }}" 
+                                class="btn btn-primary btn-sm flex-fill flex-grow-1 flex-md-grow-0">
+                                Application Form
+                                </a>
                         {% else %}
                             <span class="badge bg-warning text-dark">Pending Payment</span>
                         {% endif %}
@@ -95,18 +100,21 @@
                                         data-bs-target="#cancelModal{{ user_sub.id }}">
                                         Cancel
                                 </button>
-                                
+
                                 <!-- Full width on mobile, auto on larger screens -->
                                 <a href="{{ url_for('apply_program', slug=user_sub.program.slug) }}" 
                                 class="btn btn-primary btn-sm flex-fill flex-grow-1 flex-md-grow-0">
                                 Application Form
                                 </a>
+                                
+                                
                             </div>
                         </div>
                         {% endif %}
                 </div>
             </div>
         </div>
+        
 
         <!-- Cancel Modal for each subscription -->
         <div class="modal fade" id="cancelModal{{ user_sub.id }}" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
