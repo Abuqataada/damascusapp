@@ -397,19 +397,19 @@
     
     <!-- Bottom Navigation -->
     <nav class="bottom-nav">
-        <a href="#" class="nav-item active">
+        <a href="{{ url_for('home') }}" class="nav-item active">
             <i class="fas fa-home"></i>
             <span>Home</span>
         </a>
-        <a href="#" class="nav-item">
+        <a href="{{ url_for('choose_program') }}" class="nav-item">
             <i class="fas fa-list-alt"></i>
-            <span>Applications</span>
+            <span>Subscription</span>
         </a>
-        <a href="#" class="nav-item">
+        <a href="{{ url_for('contact') }}" class="nav-item">
             <i class="fas fa-envelope"></i>
             <span>Contact</span>
         </a>
-        <a href="#" class="nav-item">
+        <a href="{{ url_for('dashboard') }}" class="nav-item">
             <i class="fas fa-user"></i>
             <span>Account</span>
         </a>

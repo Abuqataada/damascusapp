@@ -92,9 +92,20 @@
         </p>
         <p>💼 Ideal for: Drivers, operators, contractors, or aspiring business owners seeking to build assets through installment payments.</p>
         <p>Take control of your future. Subscribe, apply, and own with confidence.</p>
-        <a href="{{ url_for('payment_details', program_slug='hireb') }}" class="btn btn-primary mt-3">
-        Subscribe Now
-        </a>
+        <form method="POST" action="{{ url_for('payment_details', program_slug='hireb') }}">
+            <!-- Terms Checkbox -->
+            <div class="mb-4 form-check">
+                <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
+                <label class="form-check-label small" for="terms">
+                    I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a>
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary mt-3">
+                        Subscribe Now
+            </button>
+        </form>
         <button class="btn btn-outline-secondary mt-3 ms-2" onclick="goBack()">Back</button>
         <p class="mt-2 text-muted">Category: Subscriptions</p>
     </div>
@@ -122,9 +133,20 @@
         </p>
         <p>💼 Perfect for: Equipment or vehicle owners seeking safe, profitable partnerships under a well-structured hire purchase system.</p>
         <p>Let Damascus Projects handle the process while you grow your returns securely.</p>
-        <a href="{{ url_for('payment_details', program_slug='hires') }}" class="btn btn-primary mt-3">
-        Subscribe Now
-        </a>
+        <form method="POST" action="{{ url_for('payment_details', program_slug='hires') }}">
+            <!-- Terms Checkbox -->
+            <div class="mb-4 form-check">
+                <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
+                <label class="form-check-label small" for="terms">
+                    I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a>
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary mt-3">
+                        Subscribe Now
+            </button>
+        </form>
         <button class="btn btn-outline-secondary mt-3 ms-2" onclick="goBack()">Back</button>
         <p class="mt-2 text-muted">Category: Subscriptions</p>
     </div>

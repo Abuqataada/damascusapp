@@ -214,7 +214,7 @@ def subscribe(slug):
 def subscription():
     return "This route is not implemented yet. Please check back later.", 501
 
-@app.route('/payment-details/<program_slug>')
+@app.route('/payment-details/<program_slug>', methods=['GET', 'POST'])
 @login_required
 def payment_details(program_slug):
     program = Program.query.filter_by(slug=program_slug).first_or_404()

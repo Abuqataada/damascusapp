@@ -52,9 +52,20 @@
                     <li>Startups or teams lacking in-house project leadership</li>
                 </ul>
                 <p>Let Damascus Projects manage the complexity while you focus on the vision. With structured oversight and transparent coordination, your project is in capable hands.</p>
-                <a href="{{ url_for('payment_details', program_slug='project_management') }}" class="btn btn-primary mt-3">
-                    Subscribe Now
-                </a>
+                <form method="POST" action="{{ url_for('payment_details', program_slug='project_management') }}">
+                    <!-- Terms Checkbox -->
+                    <div class="mb-4 form-check">
+                        <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
+                        <label class="form-check-label small" for="terms">
+                            I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Conditions</a>
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary mt-3">
+                        Subscribe Now
+                    </button>
+                </form>
                 <p class="mt-2">Category: Subscriptions</p>
         `,
         "housing": `
@@ -82,9 +93,20 @@
                     <li>Anyone ready to move from renting to owning with peace of mind</li>
                 </ul>
                 <p>With Damascus Projects, your journey to a secured and structured homeownership experience begins now.</p>
-                <a href="{{ url_for('payment_details', program_slug='housing') }}" class="btn btn-primary mt-3">
-                    Subscribe Now
-                </a>
+                <form method="POST" action="{{ url_for('payment_details', program_slug='housing') }}">
+                    <!-- Terms Checkbox -->
+                    <div class="mb-4 form-check">
+                        <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
+                        <label class="form-check-label small" for="terms">
+                            I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Conditions</a>
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary mt-3">
+                        Subscribe Now
+                    </button>
+                </form>
                 <p class="mt-2">Category: Subscriptions</p>
         `,
         "investor": `
@@ -95,39 +117,76 @@
                 <h5>Investors Subscription</h5>
                 <p>₦499,999.00</p>
                 <p>This subscription empowers Damascus Projects to orchestrate daily operations that are instrumental in meticulously analyzing and selecting the most appropriate projects tailored to your needs. This fund serves as a vital resource, enabling comprehensive security assessments as you navigate the journey of identifying and establishing a business. It encompasses detailed feasibility studies along with a suite of robust measures designed to mitigate risks and safeguard against potential setbacks, ensuring a pathway to success that is as secure as it is promising.</p>
-                <a href="{{ url_for('payment_details', program_slug='investor') }}" class="btn btn-primary mt-3">
-                    Subscribe Now
-                </a>
+                <form method="POST" action="{{ url_for('payment_details', program_slug='investor') }}">
+                    <!-- Terms Checkbox -->
+                    <div class="mb-4 form-check">
+                        <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
+                        <label class="form-check-label small" for="terms">
+                            I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Conditions</a>
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary mt-3">
+                        Subscribe Now
+                    </button>
+                </form>
                 <p class="mt-2">Category: Subscriptions</p>
         `,
         "visa": `
-            <h4>Visa Sponsorship Subscription</h4>
-            <p>🔍 Purchasing this subscription will provide access to Visa Sponsorship Subscription</p>
+            <h4>Damascus Projects Visa Sponsorship Program</h4>
+            <p>Thank you for selecting the Damascus Projects Visa Sponsorship Program. <strong>"Pause a moment; let's engage in an important conversation."</strong></p>
+            <p>🔍 Purchasing this subscription will provide access to Visa Sponsorship Program</p>
+
             <div class="mb-3">
                 <img src="{{ url_for('static', filename='images/visa.jpg') }}" alt="Visa Sponsorship" class="img-fluid mb-3">
             </div>
-            <h5>Visa Sponsorship Subscription</h5>
-            <p>₦37,000.00</p>
-            <p>Embark on your journey to international work or study opportunities with confidence through the Damascus Projects Visa Sponsorship Program. This subscription is your official entry point into a carefully guided process that connects you with global institutions, employers, and opportunities suited to your background and goals.</p>
-            <p>📝 Subscription Fee: ₦21,000<br>(Please note: Your subscription will remain pending until payment has been confirmed.)</p>
-            <p>✅ What This Subscription Includes:</p>
-            <ul>
-                <li>Access to the official application form</li>
-                <li>Review and profiling of your information to match available opportunities</li>
-                <li>Eligibility assessment and documentation guidance</li>
-                <li>Verified visa sponsorship leads for jobs or academic programs</li>
-                <li>Professional support and consultation throughout the process</li>
-            </ul>
-            <p>🌍 Best For:</p>
-            <ul>
-                <li>Job seekers pursuing employment abroad</li>
-                <li>Students seeking international admission with visa support</li>
-                <li>Individuals planning relocation with valid migration intentions</li>
-            </ul>
-            <p>With Damascus Projects, your global vision gets the structure, guidance, and support it needs to become a reality.</p>
-            <a href="{{ url_for('payment_details', program_slug='visa') }}" class="btn btn-primary mt-3">
-                Subscribe Now
-            </a>
+
+            <h5>About the Subscription</h5>
+            <p>
+                The subscription linked to this program is <strong>not a payment for your visa or any associated processing fees</strong>. 
+                Instead, think of this subscription as a <strong>traffic control mechanism</strong>, a crucial pause that helps us gauge commitment. 
+                It serves as a litmus test to identify clients who are genuinely ready to embark on their journey, as opposed to those merely browsing the possibilities. 
+                We take diligent care to assess our clients thoroughly, and this step is just the beginning of that process.
+            </p>
+
+            <p>
+                This subscription is categorized as an <strong>office charge</strong> that significantly facilitates our due diligence and hired legal services. 
+                A subscription fee of <strong>₦37,500</strong> (10% of the anticipated costs for these essential services) is required.
+            </p>
+
+            <h5>Our Promise</h5>
+            <p>
+                <strong>Non-refundable policy:</strong> This subscription is non-refundable; however, we offer a steadfast promise to every client who advances to the next stage: 
+                The Damascus Project Company is dedicated to ensuring that financial constraints do not obstruct your visa pursuits. 
+                The benefits of your subscription last a lifetime. Should you face a visa denial during the process, you are welcome to request further chances to apply to another country, 
+                whether through our recommended visa agency or a different one.
+            </p>
+
+            
+
+            <p>
+                By choosing to move forward at this stage, you are effectively inviting the Damascus Project Company to assist with your visa processing expenses, 
+                all while placing you on a <strong>manageable repayment plan</strong> upon your arrival in your new destination country.
+            </p>
+
+            <p>
+                <strong>By clicking on the terms and conditions button, you acknowledge that you fully comprehend and agree to all the stipulations governing this subscription.</strong>
+            </p>
+            <form method="POST" action="{{ url_for('payment_details', program_slug='visa') }}">
+                    <!-- Terms Checkbox -->
+                    <div class="mb-4 form-check">
+                        <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
+                        <label class="form-check-label small" for="terms">
+                            I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Conditions</a>
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary mt-3">
+                        Subscribe Now
+                    </button>
+                </form>
             <p class="mt-2">Category: Subscriptions</p>
         `,
         "innovator": `
@@ -155,9 +214,20 @@
                 <li>Anyone with an idea seeking to professionally develop and launch it</li>
             </ul>
             <p>Subscribe now and let your vision gain the clarity, protection, and roadmap it needs to flourish.</p>
-            <a href="{{ url_for('payment_details', program_slug='innovator') }}" class="btn btn-primary mt-3">
-                Subscribe Now
-            </a>
+            <form method="POST" action="{{ url_for('payment_details', program_slug='innovator') }}">
+                    <!-- Terms Checkbox -->
+                    <div class="mb-4 form-check">
+                        <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
+                        <label class="form-check-label small" for="terms">
+                            I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Conditions</a>
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary mt-3">
+                        Subscribe Now
+                    </button>
+                </form>
             <p class="mt-2">Category: Subscriptions</p>
         `
     };
