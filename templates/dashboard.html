@@ -8,7 +8,7 @@
         <!-- Profile Picture (Left Side) -->
         <div class="col-auto position-relative">
             <div class="profile-picture border rounded-circle overflow-hidden" style="width: 100px; height: 100px;">
-                <img src="{{ url_for('static', filename='uploads/' + current_user.profile_picture) or url_for('static', filename='images/profile.png') }}" 
+                <img src="{% if current_user.profile_picture %}{{ url_for('static', filename='uploads/' + current_user.profile_picture) }}{% else %}{{ url_for('static', filename='images/profile.png') }}{% endif %}" 
                     alt="Profile Picture" 
                     class="img-fluid w-100 h-100" 
                     style="object-fit: cover;">
