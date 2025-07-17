@@ -9,6 +9,27 @@ document.querySelectorAll('.solution-box').forEach(function(box) {
 
 
 
+
+
+
+
+
+
+
+
+function showAlert(event) {
+          event.preventDefault();
+          document.getElementById('successAlert').classList.remove('d-none');
+          
+          // Hide after 3 seconds
+          setTimeout(() => {
+            document.getElementById('successAlert').classList.add('d-none');
+          }, 3000);
+          
+          // Uncomment to actually submit the form
+          // event.target.submit();
+        }
+
 document.addEventListener("DOMContentLoaded", function() {
   const alerts = document.querySelectorAll('.alert');
   alerts.forEach(function(alert) {
