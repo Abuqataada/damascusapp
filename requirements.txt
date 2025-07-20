@@ -7,3 +7,4 @@ Pillow
 Werkzeug
 gunicorn
 psycopg2
+flask-mail
