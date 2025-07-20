@@ -189,9 +189,9 @@
                 </form>
             <p class="mt-2">Category: Subscriptions</p>
         `,
-        "innovator": `
-            <h4>Innovator or Idea Owner Program</h4>
-            <p>🔍 Purchasing this subscription will provide access to Innovator or Idea Owner Program</p>
+        "joint_venture": `
+            <h4>Joint Venture</h4>
+            <p>🔍 Purchasing this subscription will provide access to Joint Venture Program</p>
             <div class="mb-3">
                 <img src="{{ url_for('static', filename='images/investor.jpg') }}" alt="Innovator" class="img-fluid mb-3">
             </div>
@@ -214,7 +214,7 @@
                 <li>Anyone with an idea seeking to professionally develop and launch it</li>
             </ul>
             <p>Subscribe now and let your vision gain the clarity, protection, and roadmap it needs to flourish.</p>
-            <form method="POST" action="{{ url_for('payment_details', program_slug='innovator') }}">
+            <form method="POST" action="{{ url_for('payment_details', program_slug='joint_venture') }}">
                     <!-- Terms Checkbox -->
                     <div class="mb-4 form-check">
                         <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
