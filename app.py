@@ -23,17 +23,17 @@ db_password = quote_plus(os.getenv('DB_PASSWORD', 'sample_password'))
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'devkey')
 
 # Choose database based on environment
-#if os.getenv('FLASK_ENV') == 'production':
-db_user = os.getenv('DB_USER', 'cpaneluser_damascus_developer')
-db_host = os.getenv('DB_HOST', 'localhost')
-db_port = os.getenv('DB_PORT', '5432')
-db_name = os.getenv('DB_NAME', 'cpaneluser_damascus_app')
-
-app.config['SQLALCHEMY_DATABASE_URI'] = (
+if os.getenv('FLASK_ENV') == 'production':
+    db_user = os.getenv('DB_USER', 'cpaneluser_damascus_developer')
+    db_host = os.getenv('DB_HOST', 'localhost')
+    db_port = os.getenv('DB_PORT', '5432')
+    db_name = os.getenv('DB_NAME', 'cpaneluser_damascus_app')
+    
+    app.config['SQLALCHEMY_DATABASE_URI'] = (
     f"postgresql+psycopg2://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
     )
-#else:
-#    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
