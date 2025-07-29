@@ -41,3 +41,37 @@ document.addEventListener("DOMContentLoaded", function() {
     }, 4000);
   });
 });
+
+
+
+
+
+
+// Show spinner function (called on clicks/navigation)
+function showLoading() {
+    window.AppInventor.setWebViewString("show_spinner");
+}
+
+// Hide spinner function (called when page finishes loading)
+function hideLoading() {
+    window.AppInventor.setWebViewString("hide_spinner");
+}
+
+// ===== 1. Trigger Spinner on ALL BUTTON/LINK CLICKS =====
+document.addEventListener("click", function(event) {
+    const target = event.target;
+    // Check if clicked element is a button, link, or has [onclick]
+    if (target.tagName === "BUTTON" || 
+        target.tagName === "A" || 
+        target.hasAttribute("onclick")) {
+        showLoading();
+    }
+});
+
+// ===== 2. Trigger Spinner on PAGE TRANSITIONS (before unload) =====
+window.addEventListener("beforeunload", function() {
+    showLoading();
+});
+
+// ===== 3. Hide Spinner When New Page Finishes Loading =====
+window.addEventListener("load", hideLoading);

@@ -78,7 +78,7 @@
     background: #053a8a;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
+    }
 
 .heading {
     font-family: 'Poppins', sans-serif;
@@ -164,7 +164,9 @@
 
 
 
-
+.logout {
+     margin-bottom: 15px;
+}
 
 
 .program-box {
