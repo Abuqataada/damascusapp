@@ -1,0 +1,116 @@
+<!-- templates/partials/_preloader.html -->
+<style>
+  #preloader {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: rgba(255, 255, 255, 0.6); /* More transparent */
+    backdrop-filter: blur(2px);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease;
+  }
+
+  body.dark-mode #preloader {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+
+  #preloader.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .dot-cycle-loader {
+    position: relative;
+    width: 60px;
+    height: 60px;
+  }
+
+  .dot-cycle-loader div {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #007bff;
+    border-radius: 50%;
+    animation: rotate 1.2s linear infinite;
+  }
+
+  body.dark-mode .dot-cycle-loader div {
+    background: #00bfff;
+  }
+
+  .dot-cycle-loader div:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); animation-delay: 0s; }
+  .dot-cycle-loader div:nth-child(2) { top: 14%; left: 85%; transform: translate(-50%, -50%); animation-delay: 0.1s; }
+  .dot-cycle-loader div:nth-child(3) { top: 50%; left: 100%; transform: translate(-50%, -50%); animation-delay: 0.2s; }
+  .dot-cycle-loader div:nth-child(4) { top: 85%; left: 85%; transform: translate(-50%, -50%); animation-delay: 0.3s; }
+  .dot-cycle-loader div:nth-child(5) { top: 100%; left: 50%; transform: translate(-50%, -100%); animation-delay: 0.4s; }
+  .dot-cycle-loader div:nth-child(6) { top: 85%; left: 14%; transform: translate(-50%, -50%); animation-delay: 0.5s; }
+  .dot-cycle-loader div:nth-child(7) { top: 50%; left: 0%; transform: translate(-50%, -50%); animation-delay: 0.6s; }
+  .dot-cycle-loader div:nth-child(8) { top: 14%; left: 14%; transform: translate(-50%, -50%); animation-delay: 0.7s; }
+
+  @keyframes rotate {
+    0%   { opacity: 1; }
+    100% { opacity: 0; }
+  }
+</style>
+
+<div id="preloader">
+  <div class="dot-cycle-loader">
+    <div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div>
+  </div>
+</div>
+
+<script>
+  const preloader = document.getElementById('preloader');
+  let loaderTimeout;
+
+  function showPreloader() {
+    clearTimeout(loaderTimeout);
+    preloader.style.display = 'flex';
+    preloader.classList.remove('hidden');
+  }
+
+  function hidePreloader() {
+    loaderTimeout = setTimeout(() => {
+      preloader.classList.add('hidden');
+      setTimeout(() => {
+        preloader.style.display = 'none';
+      }, 500);
+    }, 700); // reduced to 700ms for better UX
+  }
+
+  window.addEventListener('load', () => {
+    hidePreloader();
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Forms
+    document.querySelectorAll('form').forEach(form => {
+      form.addEventListener('submit', () => {
+        showPreloader();
+      });
+    });
+
+    // Links and buttons
+    document.querySelectorAll('a, button, [data-preload]').forEach(el => {
+      el.addEventListener('click', e => {
+        const target = e.currentTarget;
+
+        if (
+          target.hasAttribute('download') ||
+          target.getAttribute('target') === '_blank' ||
+          target.getAttribute('href')?.startsWith('javascript:') ||
+          target.getAttribute('data-bs-toggle') === 'modal' ||
+          target.getAttribute('data-toggle') === 'modal' ||
+          target.closest('[data-bs-toggle="modal"], [data-toggle="modal"]') ||
+          target.hasAttribute('data-no-preload')
+        ) return;
+
+        showPreloader();
+      });
+    });
+  });
+</script>

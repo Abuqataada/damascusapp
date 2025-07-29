@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-danger shadow">
+                <div class="card-header bg-danger text-white">
+                    <h2 class="h4 mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Delete Account</h2>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger">
+                        <h4 class="alert-heading">Warning: Permanent Account Deletion</h4>
+                        <p class="mb-0">This action cannot be undone. All your data will be permanently erased.</p>
+                    </div>
+                    
+                    <h5 class="mt-4">Consequences of deleting your account:</h5>
+                    <ul class="list-group list-group-flush mb-4">
+                        <li class="list-group-item">• All your subscriptions will be canceled immediately</li>
+                        <li class="list-group-item">• Any pending payments will be voided</li>
+                        <li class="list-group-item">• Your profile and all personal data will be erased</li>
+                        <li class="list-group-item">• You will lose access to all services</li>
+                        <li class="list-group-item">• This action is irreversible</li>
+                    </ul>
+                    
+                    <form method="POST" action="{{ url_for('delete_account') }}">
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Enter your password to confirm:</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="reason" class="form-label">Reason for leaving (optional):</label>
+                            <textarea class="form-control" id="reason" name="reason" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i> Cancel
+                            </a>
+                            
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-no-preload>
+                                <i class="fas fa-trash-alt me-2"></i> Delete Account Permanently
+                            </button>
+                        </div>
+                        
+                        <!-- Confirmation Modal -->
+                        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-danger text-white">
+                                        <h5 class="modal-title">Final Confirmation</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you absolutely sure you want to delete your account and all associated data?</p>
+                                        <p class="fw-bold">This action cannot be undone.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-no-preload>Cancel</button>
+                                        <button type="submit" class="btn btn-danger">Yes, Delete My Account</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

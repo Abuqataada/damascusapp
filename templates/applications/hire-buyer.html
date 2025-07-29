@@ -13,6 +13,7 @@
             --light: #f8f9fa;
             --dark: #212529;
             --success: #4cc9f0;
+            --danger: #f72585;
         }
         
         body {
@@ -207,6 +208,37 @@
             color: var(--primary);
         }
         
+        .invalid-feedback {
+            color: var(--danger);
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+        }
+        
+        .is-invalid {
+            border-color: var(--danger) !important;
+        }
+        
+        .is-invalid:focus {
+            box-shadow: 0 0 0 0.25rem rgba(247, 37, 133, 0.25) !important;
+        }
+        
+        .progress {
+            height: 6px;
+            margin-top: 10px;
+            background-color: #e9ecef;
+        }
+        
+        .progress-bar {
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .form-note {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-top: 0.5rem;
+        }
+        
         @media (max-width: 576px) {
             .form-container {
                 border-radius: 0;
@@ -251,39 +283,48 @@
                 </div>
             </div>
             
-            <form id="multiStepForm">
+            <div class="progress mx-3">
+                <div class="progress-bar" id="formProgress" role="progressbar" style="width: 25%"></div>
+            </div>
+            
+            <form id="multiStepForm" action="{{ url_for('submit_hire_buyer') }}" method="POST" enctype="multipart/form-data">
                 <!-- Step 1: Personal Information -->
                 <div class="form-step active" id="step1">
                     <h3 class="form-title">Personal Information</h3>
+                    <p class="form-note">Please provide your personal details. All fields marked with (Required) are mandatory.</p>
                     
                     <div class="row g-2">
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
+                                <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name" required>
                                 <label for="firstName">First Name (Required)</label>
+                                <div class="invalid-feedback">Please enter your first name</div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
+                                <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name" required>
                                 <label for="lastName">Last Name (Required)</label>
+                                <div class="invalid-feedback">Please enter your last name</div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="form-floating mt-2">
-                        <input type="text" class="form-control" id="streetAddress" placeholder="Street Address" required>
+                        <input type="text" class="form-control" id="streetAddress" name="streetAddress" placeholder="Street Address" required>
                         <label for="streetAddress">Street Address (Required)</label>
+                        <div class="invalid-feedback">Please enter your street address</div>
                     </div>
                     
                     <div class="form-floating mt-2">
-                        <input type="text" class="form-control" id="addressLine2" placeholder="Address Line 2">
+                        <input type="text" class="form-control" id="addressLine2" name="addressLine2" placeholder="Address Line 2">
                         <label for="addressLine2">Address Line 2 (Optional)</label>
                     </div>
                     
                     <div class="form-floating mt-2">
-                        <input type="text" class="form-control" id="city" placeholder="City" required>
+                        <input type="text" class="form-control" id="city" name="city" placeholder="City" required>
                         <label for="city">City (Required)</label>
+                        <div class="invalid-feedback">Please enter your city</div>
                     </div>
                     
                     <div class="form-footer">
@@ -294,36 +335,47 @@
                 <!-- Step 2: Contact Details -->
                 <div class="form-step" id="step2">
                     <h3 class="form-title">Contact Details</h3>
+                    <p class="form-note">Please provide your contact information. We'll use this to communicate with you about your application.</p>
                     
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="state" placeholder="State/Province" required>
+                        <input type="text" class="form-control" id="state" name="state" placeholder="State/Province" required>
                         <label for="state">State/Province (Required)</label>
+                        <div class="invalid-feedback">Please enter your state/province</div>
                     </div>
                     
                     <div class="form-floating mt-2">
-                        <input type="text" class="form-control" id="zipCode" placeholder="ZIP/Postal Code" required>
+                        <input type="text" class="form-control" id="zipCode" name="zipCode" placeholder="ZIP/Postal Code" required>
                         <label for="zipCode">ZIP/Postal Code (Required)</label>
+                        <div class="invalid-feedback">Please enter your ZIP/postal code</div>
                     </div>
                     
                     <div class="form-floating mt-2">
-                        <select class="form-select" id="country" required>
+                        <select class="form-select" id="country" name="country" required>
                             <option value="" selected disabled>Select Country</option>
                             <option value="US">United States</option>
                             <option value="UK">United Kingdom</option>
                             <option value="CA">Canada</option>
+                            <option value="AU">Australia</option>
+                            <option value="NG">Nigeria</option>
+                            <option value="ZA">South Africa</option>
+                            <option value="KE">Kenya</option>
+                            <option value="GH">Ghana</option>
                             <!-- More countries would be added here -->
                         </select>
                         <label for="country">Country (Required)</label>
+                        <div class="invalid-feedback">Please select your country</div>
                     </div>
                     
                     <div class="form-floating mt-2">
-                        <input type="tel" class="form-control" id="phone" placeholder="Phone" required>
+                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone" required>
                         <label for="phone">Phone (Required)</label>
+                        <div class="invalid-feedback">Please enter a valid phone number</div>
                     </div>
                     
                     <div class="form-floating mt-2">
-                        <input type="email" class="form-control" id="email" placeholder="Email" required>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                         <label for="email">Email (Required)</label>
+                        <div class="invalid-feedback">Please enter a valid email address</div>
                     </div>
                     
                     <div class="form-footer">
@@ -335,20 +387,29 @@
                 <!-- Step 3: Hire Details -->
                 <div class="form-step" id="step3">
                     <h3 class="form-title">Hire Details</h3>
+                    <p class="form-note">Tell us about your driving experience and vehicle preferences.</p>
                     
                     <div class="form-floating">
-                        <input type="number" class="form-control" id="drivingExperience" placeholder="Years" min="0" required>
+                        <input type="number" class="form-control" id="drivingExperience" name="drivingExperience" placeholder="Years" min="0" required>
                         <label for="drivingExperience">How Many Years Driving Experience? (Required)</label>
+                        <div class="invalid-feedback">Please enter your years of driving experience</div>
                     </div>
                     
                     <div class="form-floating mt-2">
-                        <input type="text" class="form-control" id="choiceOfHire" placeholder="Choice" required>
+                        <input type="text" class="form-control" id="choiceOfHire" name="choiceOfHire" placeholder="Choice" required>
                         <label for="choiceOfHire">Choice of Hire (Required)</label>
+                        <div class="invalid-feedback">Please enter your preferred vehicle</div>
                     </div>
                     
                     <div class="form-floating mt-2">
-                        <input type="text" class="form-control" id="alternativeChoice" placeholder="Alternative">
+                        <input type="text" class="form-control" id="alternativeChoice" name="alternativeChoice" placeholder="Alternative">
                         <label for="alternativeChoice">Alternative (Optional)</label>
+                    </div>
+                    
+                    <div class="form-floating mt-2">
+                        <input type="file" class="form-control" id="licenseUpload" name="licenseUpload" accept=".pdf,.jpg,.jpeg,.png">
+                        <label for="licenseUpload">Upload Driver's License (Optional)</label>
+                        <div class="form-note">Accepted formats: PDF, JPG, PNG (Max 5MB)</div>
                     </div>
                     
                     <div class="form-footer">
@@ -360,38 +421,101 @@
                 <!-- Step 4: Additional Information -->
                 <div class="form-step" id="step4">
                     <h3 class="form-title">Additional Information</h3>
+                    <p class="form-note">Please provide additional details required for your application.</p>
                     
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="nextOfKin" placeholder="Next of Kin" required>
+                        <input type="text" class="form-control" id="nextOfKin" name="nextOfKin" placeholder="Next of Kin" required>
                         <label for="nextOfKin">Name and Details of the Next of Kin (Required)</label>
+                        <div class="invalid-feedback">Please provide next of kin details</div>
                     </div>
                     
                     <div class="form-floating mt-2">
-                        <input type="text" class="form-control" id="religionAddress1" placeholder="Religion Address" required>
+                        <input type="text" class="form-control" id="religionAddress1" name="religionAddress1" placeholder="Religion Address" required>
                         <label for="religionAddress1">Religion (Address of place of worship) (Required)</label>
+                        <div class="invalid-feedback">Please provide your place of worship address</div>
                     </div>
                     
                     <div class="form-floating mt-2">
-                        <input type="text" class="form-control" id="religionAddress2" placeholder="Religion Address" required>
-                        <label for="religionAddress2">Religion (Address of place of worship) (Required)</label>
-                    </div>
-                    
-                    <div class="form-floating mt-2">
-                        <input type="text" class="form-control" id="religiousLeader" placeholder="Religious Leader" required>
+                        <input type="text" class="form-control" id="religiousLeader" name="religiousLeader" placeholder="Religious Leader" required>
                         <label for="religiousLeader">Name of Priest/Pastor/Imam/Native priest (Required)</label>
+                        <div class="invalid-feedback">Please provide your religious leader's name</div>
                     </div>
                     
                     <div class="form-floating mt-2">
-                        <input type="text" class="form-control" id="traditionalRuler" placeholder="Traditional Ruler" required>
+                        <input type="text" class="form-control" id="traditionalRuler" name="traditionalRuler" placeholder="Traditional Ruler" required>
                         <label for="traditionalRuler">Name and Address of Traditional Ruler (Required)</label>
+                        <div class="invalid-feedback">Please provide traditional ruler details</div>
+                    </div>
+                    
+                    <div class="form-check mt-3">
+                        <input class="form-check-input" type="checkbox" id="termsAgreement" name="termsAgreement" required>
+                        <label class="form-check-label" for="termsAgreement">
+                            I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms and Conditions</a> (Required)
+                        </label>
+                        <div class="invalid-feedback">You must agree to the terms and conditions</div>
                     </div>
                     
                     <div class="form-footer">
                         <button type="button" class="btn btn-outline-primary" onclick="prevStep(4)">Back</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary" id="submitBtn">Submit Application</button>
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+    
+    <!-- Terms and Conditions Modal -->
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="termsModalLabel">Terms and Conditions</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>1. Agreement to Terms</h6>
+                    <p>By submitting this hire purchase application, you agree to be bound by these terms and conditions...</p>
+                    
+                    <h6>2. Application Process</h6>
+                    <p>All applications are subject to approval. Submission of this form does not guarantee approval...</p>
+                    
+                    <h6>3. Payment Terms</h6>
+                    <p>If approved, you agree to make regular payments as specified in your hire purchase agreement...</p>
+                    
+                    <h6>4. Vehicle Use</h6>
+                    <p>The vehicle must be used for personal purposes only unless otherwise agreed in writing...</p>
+                    
+                    <h6>5. Insurance</h6>
+                    <p>You are responsible for maintaining comprehensive insurance coverage on the vehicle...</p>
+                    
+                    <h6>6. Default</h6>
+                    <p>Failure to make payments may result in repossession of the vehicle and additional fees...</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">I Understand</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Submission Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="successModalLabel">Application Submitted</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <i class="fas fa-check-circle text-success mb-3" style="font-size: 3rem;"></i>
+                    <h4>Thank You!</h4>
+                    <p>Your hire purchase application has been successfully submitted.</p>
+                    <p>We will review your information and contact you within 3 business days.</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
     </div>
     
@@ -417,13 +541,18 @@
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Form validation and step navigation
         function nextStep(currentStep) {
             if (validateStep(currentStep)) {
                 document.getElementById(`step${currentStep}`).classList.remove('active');
                 document.getElementById(`step${currentStep + 1}`).classList.add('active');
                 
                 document.getElementById(`step${currentStep}-indicator`).classList.remove('active');
+                document.getElementById(`step${currentStep}-indicator`).classList.add('completed');
                 document.getElementById(`step${currentStep + 1}-indicator`).classList.add('active');
+                
+                // Update progress bar
+                updateProgressBar(currentStep + 1);
                 
                 document.querySelector('.form-container').scrollTo(0, 0);
             }
@@ -436,26 +565,176 @@
             document.getElementById(`step${currentStep}-indicator`).classList.remove('active');
             document.getElementById(`step${currentStep - 1}-indicator`).classList.add('active');
             
+            // Update progress bar
+            updateProgressBar(currentStep - 1);
+            
             document.querySelector('.form-container').scrollTo(0, 0);
         }
         
+        function updateProgressBar(currentStep) {
+            const progressPercentage = (currentStep / 4) * 100;
+            document.getElementById('formProgress').style.width = `${progressPercentage}%`;
+        }
+        
         function validateStep(stepNumber) {
+            let isValid = true;
+            const stepElement = document.getElementById(`step${stepNumber}`);
+            
+            // Clear previous validation
+            const invalidElements = stepElement.querySelectorAll('.is-invalid');
+            invalidElements.forEach(el => el.classList.remove('is-invalid'));
+            
             if (stepNumber === 1) {
                 const requiredFields = ['firstName', 'lastName', 'streetAddress', 'city'];
                 for (const field of requiredFields) {
-                    if (!document.getElementById(field).value) {
-                        alert(`Please fill in ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`);
-                        return false;
+                    const input = document.getElementById(field);
+                    if (!input.value.trim()) {
+                        input.classList.add('is-invalid');
+                        isValid = false;
+                    }
+                }
+            } else if (stepNumber === 2) {
+                const requiredFields = ['state', 'zipCode', 'country', 'phone', 'email'];
+                for (const field of requiredFields) {
+                    const input = document.getElementById(field);
+                    if (!input.value.trim()) {
+                        input.classList.add('is-invalid');
+                        isValid = false;
+                    }
+                }
+                
+                // Additional validation for email
+                const email = document.getElementById('email');
+                if (email.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+                    email.classList.add('is-invalid');
+                    isValid = false;
+                }
+                
+                // Additional validation for phone
+                const phone = document.getElementById('phone');
+                if (phone.value && !/^[\d\s\+\-\(\)]{7,}$/.test(phone.value)) {
+                    phone.classList.add('is-invalid');
+                    isValid = false;
+                }
+            } else if (stepNumber === 3) {
+                const requiredFields = ['drivingExperience', 'choiceOfHire'];
+                for (const field of requiredFields) {
+                    const input = document.getElementById(field);
+                    if (!input.value.trim()) {
+                        input.classList.add('is-invalid');
+                        isValid = false;
+                    }
+                }
+                
+                // Validate driving experience is a positive number
+                const drivingExp = document.getElementById('drivingExperience');
+                if (drivingExp.value && (isNaN(drivingExp.value) || drivingExp.value < 0)) {
+                    drivingExp.classList.add('is-invalid');
+                    isValid = false;
+                }
+                
+                // Validate file upload if provided
+                const fileInput = document.getElementById('licenseUpload');
+                if (fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    const validTypes = ['application/pdf', 'image/jpeg', 'image/png'];
+                    const maxSize = 5 * 1024 * 1024; // 5MB
+                    
+                    if (!validTypes.includes(file.type)) {
+                        fileInput.classList.add('is-invalid');
+                        fileInput.nextElementSibling.textContent = 'Invalid file type. Please upload PDF, JPG, or PNG.';
+                        isValid = false;
+                    } else if (file.size > maxSize) {
+                        fileInput.classList.add('is-invalid');
+                        fileInput.nextElementSibling.textContent = 'File too large. Max size is 5MB.';
+                        isValid = false;
+                    }
+                }
+            } else if (stepNumber === 4) {
+                const requiredFields = ['nextOfKin', 'religionAddress1', 'religiousLeader', 'traditionalRuler'];
+                for (const field of requiredFields) {
+                    const input = document.getElementById(field);
+                    if (!input.value.trim()) {
+                        input.classList.add('is-invalid');
+                        isValid = false;
+                    }
+                }
+                
+                // Validate terms agreement
+                const termsCheckbox = document.getElementById('termsAgreement');
+                if (!termsCheckbox.checked) {
+                    termsCheckbox.classList.add('is-invalid');
+                    isValid = false;
+                }
+            }
+            
+            if (!isValid) {
+                // Scroll to first invalid field
+                const firstInvalid = stepElement.querySelector('.is-invalid');
+                if (firstInvalid) {
+                    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstInvalid.focus();
+                }
+            }
+            
+            return isValid;
+        }
+        
+        // Form submission
+        document.getElementById('multiStepForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate all steps before submission
+            let allValid = true;
+            for (let i = 1; i <= 4; i++) {
+                if (!validateStep(i)) {
+                    allValid = false;
+                    // Show the first invalid step
+                    if (allValid === false) {
+                        document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
+                        document.getElementById(`step${i}`).classList.add('active');
+                        
+                        document.querySelectorAll('.step').forEach(step => {
+                            step.classList.remove('active', 'completed');
+                        });
+                        document.getElementById(`step${i}-indicator`).classList.add('active');
+                        
+                        // Mark previous steps as completed
+                        for (let j = 1; j < i; j++) {
+                            document.getElementById(`step${j}-indicator`).classList.add('completed');
+                        }
+                        
+                        updateProgressBar(i);
+                        break;
                     }
                 }
             }
-            return true;
-        }
+            
+            if (allValid) {
+                // Show loading state on submit button
+                const submitBtn = document.getElementById('submitBtn');
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...';
+            }
+        });
         
-        document.getElementById('multiStepForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Form submitted successfully!');
-            // Form submission logic would go here
+        // Initialize progress bar
+        updateProgressBar(1);
+        
+        // Add input event listeners to clear validation errors when user corrects them
+        document.querySelectorAll('input, select, textarea').forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.classList.contains('is-invalid')) {
+                    this.classList.remove('is-invalid');
+                }
+            });
+        });
+        
+        // Special handling for checkbox
+        document.getElementById('termsAgreement').addEventListener('change', function() {
+            if (this.classList.contains('is-invalid')) {
+                this.classList.remove('is-invalid');
+            }
         });
     </script>
 </body>

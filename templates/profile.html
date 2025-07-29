@@ -1,0 +1,126 @@
+{% extends "dashboard_base.html" %}
+
+{% block content %}
+<div class="container py-4" style="max-width: 500px;">
+  <h4 class="mb-4 text-primary">Profile Settings</h4>
+
+  <!-- Profile Update Form -->
+  <form method="POST" action="{{ url_for('update_profile') }}" id="profileForm">
+    <div class="mb-3">
+      <label>First Name</label>
+      <input type="text" name="firstname" id="firstname" class="form-control" value="{{ current_user.first_name }}">
+    </div>
+
+    <div class="mb-3">
+      <label>Last Name</label>
+      <input type="text" name=lastname" id="lastname" class="form-control" value="{{ current_user.last_name }}">
+    </div>
+
+    <div class="mb-3">
+      <label>Username</label>
+      <input type="text" name="username" id="username" class="form-control" value="{{ current_user.username }}">
+    </div>
+
+    <div class="mb-3">
+  <label>Email</label>
+  <div class="input-group">
+    <input type="email" name="email" id="email" class="form-control" value="{{ current_user.email }}" required>
+    {% if not current_user.verified %}
+      <button class="btn btn-outline-warning" type="button" id="verifyEmailBtn" style="display: none;" data-no-preload>Verify</button>
+    {% endif %}
+  </div>
+  {% if current_user.verified %}
+    <small class="text-success">Email is verified ✅</small>
+  {% else %}
+    <small class="text-danger" id="emailStatus">Email not verified ❌</small>
+  {% endif %}
+</div>
+
+    <div class="mb-3">
+      <label>Phone</label>
+      <input type="tel" name="phone" id="phone" class="form-control" value="{{ current_user.phone }}">
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100" id="submitBtn" disabled>Update Profile</button>
+  </form>
+
+  <hr class="my-4">
+
+  <!-- Change Password Form -->
+  <h5 class="mb-3 text-primary">Change Password</h5>
+  <form method="POST" action="{{ url_for('change_password') }}">
+    <div class="mb-3">
+      <label>Current Password</label>
+      <input type="password" name="current_password" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label>New Password</label>
+      <input type="password" name="new_password" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label>Confirm New Password</label>
+      <input type="password" name="confirm_password" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-secondary w-100">Change Password</button>
+  </form>
+</div>
+
+
+<div class="card border-danger mt-4">
+    <!-- Logout Button -->
+    <div class="text-end mt-4">
+        <a href="{{ url_for('logout') }}" class="btn btn-outline-danger">Logout</a>
+    </div>
+    
+    <div class="card-body">
+        <h5 class="card-title text-danger">Danger Zone</h5>
+        <p class="card-text">Permanently delete your account and all associated data.</p>
+        <a href="{{ url_for('delete_account') }}" class="btn btn-outline-danger">
+            <i class="fas fa-trash-alt me-2"></i> Delete Account
+        </a>
+    </div>
+</div>
+
+
+
+<!-- Toast Notification -->
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 1055">
+  <div id="toastMessage" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="polite" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body" id="toastContent">Action completed successfully.</div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" data-no-preload></button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("profileForm");
+    const submitBtn = document.getElementById("submitBtn");
+
+    const originalValues = {
+      firstname: document.getElementById("firstname").value.trim(),
+      lastname: document.getElementById("lastname").value.trim(),
+      username: document.getElementById("username").value.trim(),
+      email: document.getElementById("email").value.trim(),
+      phone: document.getElementById("phone").value.trim()
+    };
+
+    form.addEventListener("input", () => {
+      let changed = Object.keys(originalValues).some(key => {
+        return document.getElementById(key).value.trim() !== originalValues[key];
+      });
+      submitBtn.disabled = !changed;
+    });
+
+    {% if get_flashed_messages() %}
+      const toast = new bootstrap.Toast(document.getElementById("toastMessage"));
+      document.getElementById("toastContent").innerText = "{{ get_flashed_messages()[0] }}";
+      toast.show();
+    {% endif %}
+  });
+</script>
+{% endblock %}

@@ -1,511 +1,310 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investor Application Form</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #4361ee;
-            --secondary: #3f37c9;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --success: #4cc9f0;
-        }
-        
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background-color: #f5f7ff;
-            color: var(--dark);
-            padding-bottom: 80px;
-        }
-        
-        .form-container {
-            max-width: 600px;
-            margin: 20px auto;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
-            overflow: hidden;
-        }
-        
-        .form-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 1rem;
-            text-align: center;
-        }
-        
-        .step-indicator {
-            display: flex;
-            justify-content: space-between;
-            padding: 1rem;
-            background-color: var(--light);
-        }
-        
-        .step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            flex: 1;
-        }
-        
-        .step:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            width: 100%;
-            height: 2px;
-            background-color: #dee2e6;
-            z-index: 1;
-        }
-        
-        .step-number {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #adb5bd;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            z-index: 2;
-        }
-        
-        .step.active .step-number {
-            background-color: var(--primary);
-        }
-        
-        .step.completed .step-number {
-            background-color: var(--success);
-        }
-        
-        .step-label {
-            margin-top: 8px;
-            font-size: 0.75rem;
-            color: #6c757d;
-            text-align: center;
-        }
-        
-        .step.active .step-label,
-        .step.completed .step-label {
-            color: var(--dark);
-            font-weight: 500;
-        }
-        
-        .form-step {
-            padding: 1.5rem;
-            display: none;
-        }
-        
-        .form-step.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .form-title {
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-            font-size: 1.25rem;
-        }
-        
-        .form-floating label {
-            color: #6c757d;
-            font-size: 0.9rem;
-        }
-        
-        .form-control, .form-select {
-            border-radius: 8px;
-            padding: 0.75rem;
-            border: 1px solid #ced4da;
-            font-size: 0.9rem;
-        }
-        
-        .form-control:focus, .form-select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
-        }
-        
-        .btn-primary {
-            background-color: var(--primary);
-            border: none;
-            border-radius: 8px;
-            padding: 0.75rem 1.5rem;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-        
-        .btn-primary:hover {
-            background-color: var(--secondary);
-        }
-        
-        .btn-outline-primary {
-            color: var(--primary);
-            border-color: var(--primary);
-            border-radius: 8px;
-            padding: 0.75rem 1.5rem;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-        
-        .btn-outline-primary:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        .radio-group, .checkbox-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .radio-option, .checkbox-option {
-            flex: 1 0 120px;
-        }
-        
-        .radio-option input[type="radio"], 
-        .checkbox-option input[type="checkbox"] {
-            display: none;
-        }
-        
-        .radio-option label, 
-        .checkbox-option label {
-            display: block;
-            padding: 0.75rem;
-            border: 1px solid #ced4da;
-            border-radius: 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .radio-option input[type="radio"]:checked + label,
-        .checkbox-option input[type="checkbox"]:checked + label {
-            border-color: var(--primary);
-            background-color: rgba(67, 97, 238, 0.1);
-            color: var(--primary);
-            font-weight: 500;
-        }
-        
-        .amount-range {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .amount-range .form-floating {
-            flex: 1;
-        }
-        
-        .form-footer {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 1.5rem;
-            padding-top: 1rem;
-            border-top: 1px solid #dee2e6;
-        }
-        
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            padding: 0.75rem 0;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-around;
-            z-index: 1000;
-            height: 60px;
-        }
-        
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #6c757d;
-            text-decoration: none;
-            font-size: 0.75rem;
-            padding: 0.25rem;
-            flex: 1;
-            max-width: 25%;
-        }
-        
-        .nav-item i {
-            font-size: 1.1rem;
-            margin-bottom: 0.25rem;
-        }
-        
-        .nav-item.active {
-            color: var(--primary);
-        }
-        
-        @media (max-width: 576px) {
-            .form-container {
-                border-radius: 0;
-                margin: 0;
-                box-shadow: none;
-            }
-            
-            .form-step {
-                padding: 1rem;
-            }
-            
-            .form-title {
-                font-size: 1.1rem;
-            }
-            
-            .radio-option, .checkbox-option {
-                flex: 1 0 100%;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Investor Application Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3f37c9;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --success: #4cc9f0;
+      --error: #f72585;
+    }
+
+    body {
+      background-color: #f5f7ff;
+      font-family: 'Segoe UI', sans-serif;
+      color: var(--dark);
+      padding-bottom: 80px;
+    }
+
+    .form-container {
+      max-width: 650px;
+      margin: 2rem auto;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+      overflow: hidden;
+    }
+
+    .form-header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+    }
+
+    .step-indicator {
+      display: flex;
+      justify-content: space-between;
+      background-color: var(--light);
+      padding: 1rem;
+    }
+
+    .step {
+      flex: 1;
+      text-align: center;
+      position: relative;
+    }
+
+    .step-number {
+      width: 40px;
+      height: 40px;
+      margin: 0 auto;
+      border-radius: 50%;
+      background-color: #adb5bd;
+      color: white;
+      line-height: 40px;
+      font-weight: bold;
+    }
+
+    .step.active .step-number,
+    .step.completed .step-number {
+      background-color: var(--primary);
+    }
+
+    .step-label {
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+    }
+
+    .form-step {
+      display: none;
+      padding: 2rem;
+    }
+
+    .form-step.active {
+      display: block;
+    }
+
+    .form-footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2rem;
+      border-top: 1px solid #dee2e6;
+      padding-top: 1rem;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      padding: 0.75rem 0;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-around;
+      z-index: 1000;
+      height: 60px;
+    }
+
+    .nav-item {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #6c757d;
+    }
+
+    .nav-item.active {
+      color: var(--primary);
+    }
+  </style>
 </head>
 <body>
-    <div class="container py-3">
-        <div class="form-container">
-            <div class="form-header">
-                <h2>Investor Application Form</h2>
-                <p>Complete all steps to submit your application</p>
-            </div>
-            
-            <div class="step-indicator">
-                <div class="step active" id="step1-indicator">
-                    <div class="step-number">1</div>
-                    <div class="step-label">Basic Info</div>
-                </div>
-                <div class="step" id="step2-indicator">
-                    <div class="step-number">2</div>
-                    <div class="step-label">Investment Details</div>
-                </div>
-                <div class="step" id="step3-indicator">
-                    <div class="step-number">3</div>
-                    <div class="step-label">Contact Info</div>
-                </div>
-            </div>
-            
-            <form id="multiStepForm">
-                <!-- Step 1: Basic Information -->
-                <div class="form-step active" id="step1">
-                    <h3 class="form-title">Basic Information</h3>
-                    
-                    <div class="row g-2">
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
-                                <label for="firstName">First Name (Required)</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
-                                <label for="lastName">Last Name (Required)</label>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-footer">
-                        <button type="button" class="btn btn-primary" onclick="nextStep(1)">Next</button>
-                    </div>
-                </div>
-                
-                <!-- Step 2: Investment Details -->
-                <div class="form-step" id="step2">
-                    <h3 class="form-title">Investment Details</h3>
-                    
-                    <div class="form-floating">
-                        <select class="form-select" id="amountRange" required>
-                            <option value="" selected disabled>Select Amount Range</option>
-                            <option value="5-10">₦5M - ₦10M</option>
-                            <option value="10-20">₦10M - ₦20M</option>
-                            <option value="20-50">₦20M - ₦50M</option>
-                            <option value="50-100">₦50M - ₦100M</option>
-                            <option value="100+">Above ₦100M</option>
-                        </select>
-                        <label for="amountRange">Desired Amount Range (Required)</label>
-                    </div>
-                    
-                    <div class="form-floating mt-2">
-                        <input type="text" class="form-control" id="preferredArea" placeholder="Preferred Area" required>
-                        <label for="preferredArea">Preferred Area of Investment (Required)</label>
-                    </div>
-                    
-                    <div class="form-floating mt-2">
-                        <input type="text" class="form-control" id="preferredState" placeholder="Preferred State" required>
-                        <label for="preferredState">Preferred State of Investment (Required)</label>
-                    </div>
-                    
-                    <div class="form-floating mt-2">
-                        <input type="text" class="form-control" id="excludedState" placeholder="Excluded State">
-                        <label for="excludedState">State You Never Wish To Invest In (if any)</label>
-                    </div>
-                    
-                    <div class="form-footer">
-                        <button type="button" class="btn btn-outline-primary" onclick="prevStep(2)">Back</button>
-                        <button type="button" class="btn btn-primary" onclick="nextStep(2)">Next</button>
-                    </div>
-                </div>
-                
-                <!-- Step 3: Contact Information -->
-                <div class="form-step" id="step3">
-                    <h3 class="form-title">Contact Information</h3>
-                    
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="streetAddress" placeholder="Street Address" required>
-                        <label for="streetAddress">Street Address (Required)</label>
-                    </div>
-                    
-                    <div class="form-floating mt-2">
-                        <input type="text" class="form-control" id="addressLine2" placeholder="Address Line 2">
-                        <label for="addressLine2">Address Line 2</label>
-                    </div>
-                    
-                    <div class="row g-2">
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="city" placeholder="City" required>
-                                <label for="city">City (Required)</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="zipCode" placeholder="ZIP/Postal Code" required>
-                                <label for="zipCode">ZIP/Postal Code (Required)</label>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-floating mt-2">
-                        <select class="form-select" id="country" required>
-                            <option value="" selected disabled>Select Country</option>
-                            <option value="NG">Nigeria</option>
-                            <option value="GH">Ghana</option>
-                            <option value="US">United States</option>
-                            <option value="UK">United Kingdom</option>
-                        </select>
-                        <label for="country">Country (Required)</label>
-                    </div>
-                    
-                    <div class="form-floating mt-2">
-                        <input type="email" class="form-control" id="email" placeholder="Email" required>
-                        <label for="email">Email Address (Required)</label>
-                    </div>
-                    
-                    <div class="form-floating mt-2">
-                        <input type="email" class="form-control" id="confirmEmail" placeholder="Confirm Email" required>
-                        <label for="confirmEmail">Confirm Email Address (Required)</label>
-                    </div>
-                    
-                    <div class="form-floating mt-2">
-                        <input type="tel" class="form-control" id="phone" placeholder="Phone" required>
-                        <label for="phone">Phone Number (Required)</label>
-                    </div>
-                    
-                    <div class="form-footer">
-                        <button type="button" class="btn btn-outline-primary" onclick="prevStep(3)">Back</button>
-                        <button type="submit" class="btn btn-primary">Submit Application</button>
-                    </div>
-                </div>
-            </form>
+  <div class="container py-3">
+    <div class="form-container">
+      <div class="form-header">
+        <h2>Investor Application Form</h2>
+        <p>Complete all steps to submit your application</p>
+      </div>
+
+      <div class="step-indicator">
+        <div class="step active" id="step1-indicator">
+          <div class="step-number">1</div>
+          <div class="step-label">Basic Info</div>
         </div>
+        <div class="step" id="step2-indicator">
+          <div class="step-number">2</div>
+          <div class="step-label">Investment</div>
+        </div>
+        <div class="step" id="step3-indicator">
+          <div class="step-number">3</div>
+          <div class="step-label">Contact</div>
+        </div>
+      </div>
+
+      <form id="investorForm" action="{{ url_for('submit_investor') }}" method="POST">
+        <!-- Step 1 -->
+        <div class="form-step active" id="step1">
+          <h3 class="form-title">Basic Information</h3>
+          <div class="row g-2">
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="firstName" name="first_name" required>
+                <label for="firstName">First Name</label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="lastName" name="last_name" required>
+                <label for="lastName">Last Name</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-footer">
+            <button type="button" class="btn btn-primary" onclick="nextStep(1)">Next</button>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="form-step" id="step2">
+          <h3 class="form-title">Investment Details</h3>
+          <div class="form-floating mb-3">
+            <select class="form-select" id="amountRange" name="amount_range" required>
+              <option value="" selected disabled>Select Amount</option>
+              <option value="5-10">₦5M - ₦10M</option>
+              <option value="10-20">₦10M - ₦20M</option>
+              <option value="20-50">₦20M - ₦50M</option>
+              <option value="50-100">₦50M - ₦100M</option>
+              <option value="100+">Above ₦100M</option>
+            </select>
+            <label for="amountRange">Investment Amount</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="preferredArea" name="preferred_area" required>
+            <label for="preferredArea">Preferred Investment Area</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="preferredState" name="preferred_state" required>
+            <label for="preferredState">Preferred State</label>
+          </div>
+          <div class="form-floating">
+            <input type="text" class="form-control" id="excludedState" name="excluded_state">
+            <label for="excludedState">Excluded State (optional)</label>
+          </div>
+          <div class="form-footer">
+            <button type="button" class="btn btn-outline-primary" onclick="prevStep(2)">Back</button>
+            <button type="button" class="btn btn-primary" onclick="nextStep(2)">Next</button>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="form-step" id="step3">
+          <h3 class="form-title">Contact Info</h3>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="streetAddress" name="street_address" required>
+            <label for="streetAddress">Street Address</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="addressLine2" name="address_line2">
+            <label for="addressLine2">Address Line 2</label>
+          </div>
+          <div class="row g-2 mb-3">
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="city" name="city" required>
+                <label for="city">City</label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="zipCode" name="zip_code" required>
+                <label for="zipCode">ZIP/Postal Code</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-floating mb-3">
+            <select class="form-select" id="country" name="country" required>
+              <option value="">Select Country</option>
+              <option value="NG">Nigeria</option>
+              <option value="GH">Ghana</option>
+              <option value="US">USA</option>
+              <option value="UK">UK</option>
+            </select>
+            <label for="country">Country</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="email" name="email" required>
+            <label for="email">Email</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="confirmEmail" name="confirm_email" required>
+            <label for="confirmEmail">Confirm Email</label>
+          </div>
+          <div class="text-danger mt-1" id="emailMismatchError" style="display: none; font-size: 0.875rem;">
+  Email addresses do not match.
+</div>
+          <div class="form-floating mb-3">
+            <input type="tel" class="form-control" id="phone" name="phone" required>
+            <label for="phone">Phone</label>
+          </div>
+          <div class="form-footer">
+            <button type="button" class="btn btn-outline-primary" onclick="prevStep(3)">Back</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </form>
     </div>
-    
-    <!-- Bottom Navigation -->
-    <nav class="bottom-nav">
-        <a href="{{ url_for('home') }}" class="nav-item active">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </a>
-        <a href="{{ url_for('choose_program') }}" class="nav-item">
-            <i class="fas fa-list-alt"></i>
-            <span>Subscription</span>
-        </a>
-        <a href="{{ url_for('contact') }}" class="nav-item">
-            <i class="fas fa-envelope"></i>
-            <span>Contact</span>
-        </a>
-        <a href="{{ url_for('dashboard') }}" class="nav-item">
-            <i class="fas fa-user"></i>
-            <span>Account</span>
-        </a>
-    </nav>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function nextStep(currentStep) {
-            if (validateStep(currentStep)) {
-                document.getElementById(`step${currentStep}`).classList.remove('active');
-                document.getElementById(`step${currentStep + 1}`).classList.add('active');
-                
-                document.getElementById(`step${currentStep}-indicator`).classList.remove('active');
-                document.getElementById(`step${currentStep + 1}-indicator`).classList.add('active');
-                
-                document.querySelector('.form-container').scrollTo(0, 0);
-            }
-        }
-        
-        function prevStep(currentStep) {
-            document.getElementById(`step${currentStep}`).classList.remove('active');
-            document.getElementById(`step${currentStep - 1}`).classList.add('active');
-            
-            document.getElementById(`step${currentStep}-indicator`).classList.remove('active');
-            document.getElementById(`step${currentStep - 1}-indicator`).classList.add('active');
-            
-            document.querySelector('.form-container').scrollTo(0, 0);
-        }
-        
-        function validateStep(stepNumber) {
-            if (stepNumber === 1) {
-                if (!document.getElementById('firstName').value || !document.getElementById('lastName').value) {
-                    alert('Please fill in your first and last name');
-                    return false;
-                }
-            } else if (stepNumber === 2) {
-                if (!document.getElementById('amountRange').value || 
-                    !document.getElementById('preferredArea').value || 
-                    !document.getElementById('preferredState').value) {
-                    alert('Please fill in all required investment details');
-                    return false;
-                }
-            }
-            return true;
-        }
-        
-        document.getElementById('multiStepForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Validate email match
-            const email = document.getElementById('email').value;
-            const confirmEmail = document.getElementById('confirmEmail').value;
-            
-            if (email !== confirmEmail) {
-                alert('Email addresses do not match');
-                return;
-            }
-            
-            // Validate all required fields in step 3
-            const requiredFields = ['streetAddress', 'city', 'zipCode', 'country', 'email', 'confirmEmail', 'phone'];
-            for (const field of requiredFields) {
-                if (!document.getElementById(field).value) {
-                    alert(`Please fill in ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`);
-                    return;
-                }
-            }
-            
-            alert('Application submitted successfully!');
-            // Form submission logic would go here
-        });
-    </script>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <a href="{{ url_for('home') }}" class="nav-item active"><i class="fas fa-home"></i><br/>Home</a>
+    <a href="{{ url_for('choose_program') }}" class="nav-item"><i class="fas fa-list-alt"></i><br/>Subscribe</a>
+    <a href="{{ url_for('contact') }}" class="nav-item"><i class="fas fa-envelope"></i><br/>Contact</a>
+    <a href="{{ url_for('dashboard') }}" class="nav-item"><i class="fas fa-user"></i><br/>Account</a>
+  </nav>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function nextStep(current) {
+      if (validateStep(current)) {
+        document.getElementById(`step${current}`).classList.remove('active');
+        document.getElementById(`step${current + 1}`).classList.add('active');
+        document.getElementById(`step${current}-indicator`).classList.remove('active');
+        document.getElementById(`step${current}-indicator`).classList.add('completed');
+        document.getElementById(`step${current + 1}-indicator`).classList.add('active');
+        document.querySelector('.form-container').scrollTo(0, 0);
+      }
+    }
+
+    function prevStep(current) {
+      document.getElementById(`step${current}`).classList.remove('active');
+      document.getElementById(`step${current - 1}`).classList.add('active');
+      document.getElementById(`step${current}-indicator`).classList.remove('active');
+      document.getElementById(`step${current - 1}-indicator`).classList.add('active');
+      document.querySelector('.form-container').scrollTo(0, 0);
+    }
+
+    function validateStep(step) {
+      if (step === 1) {
+        return document.getElementById('firstName').value && document.getElementById('lastName').value;
+      } else if (step === 2) {
+        return document.getElementById('amountRange').value && document.getElementById('preferredArea').value && document.getElementById('preferredState').value;
+      }
+      return true;
+    }
+
+    document.getElementById('investorForm').addEventListener('submit', function(e) {
+    const email = document.getElementById('email').value.trim();
+    const confirmEmail = document.getElementById('confirmEmail').value.trim();
+    const errorEl = document.getElementById('emailMismatchError');
+
+    if (email !== confirmEmail) {
+      e.preventDefault();
+      errorEl.style.display = 'block';
+      document.getElementById('confirmEmail').classList.add('is-invalid');
+      document.querySelector('.form-container').scrollTo(0, 0);
+    } else {
+      errorEl.style.display = 'none';
+      document.getElementById('confirmEmail').classList.remove('is-invalid');
+    }
+  });
+  </script>
 </body>
 </html>

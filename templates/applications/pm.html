@@ -13,23 +13,23 @@
             --light: #f8f9fa;
             --dark: #212529;
             --success: #4cc9f0;
+            --error: #f72585;
         }
         
         body {
             font-family: 'Segoe UI', system-ui, sans-serif;
             background-color: #f5f7ff;
             color: var(--dark);
-            padding-bottom: 80px; /* Space for bottom nav */
+            padding-bottom: 80px;
         }
         
         .form-container {
             max-width: 600px;
-            margin: 0 auto;
+            margin: 20px auto;
             background: white;
             border-radius: 16px;
             box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
             overflow: hidden;
-            margin-bottom: 20px; /* Extra space at bottom */
         }
         
         .form-header {
@@ -221,6 +221,7 @@
         
         .file-upload:hover {
             border-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
         }
         
         .file-upload i {
@@ -229,7 +230,7 @@
             margin-bottom: 0.5rem;
         }
         
-        .file-upload small {
+        .file-info {
             display: block;
             color: #6c757d;
             margin-top: 0.5rem;
@@ -279,24 +280,37 @@
             color: var(--primary);
         }
         
-        /* Mobile-specific adjustments */
+        .error-message {
+            color: var(--error);
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        
+        .is-invalid {
+            border-color: var(--error) !important;
+        }
+        
+        .is-invalid + label {
+            color: var(--error) !important;
+        }
+        
+        #confirmationModal .modal-body {
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        #confirmationModal .modal-icon {
+            font-size: 3rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+        
         @media (max-width: 576px) {
             .form-container {
                 border-radius: 0;
                 margin: 0;
                 box-shadow: none;
-            }
-            
-            .form-header {
-                padding: 0.75rem;
-            }
-            
-            .form-header h2 {
-                font-size: 1.25rem;
-            }
-            
-            .form-header p {
-                font-size: 0.85rem;
             }
             
             .form-step {
@@ -305,15 +319,6 @@
             
             .form-title {
                 font-size: 1.1rem;
-                margin-bottom: 1rem;
-            }
-            
-            .form-floating label {
-                font-size: 0.85rem;
-            }
-            
-            .form-control, .form-select {
-                padding: 0.65rem;
             }
             
             .radio-option, .checkbox-option {
@@ -323,14 +328,6 @@
             .date-inputs {
                 flex-direction: column;
                 gap: 0.5rem;
-            }
-            
-            .file-upload {
-                padding: 1rem;
-            }
-            
-            .btn-primary, .btn-outline-primary {
-                padding: 0.65rem 1rem;
             }
         }
     </style>
@@ -362,7 +359,7 @@
                 </div>
             </div>
             
-            <form id="multiStepForm">
+            <form id="pmForm" action="{{ url_for('submit_pm') }}" method="POST" enctype="multipart/form-data" novalidate>
                 <!-- Step 1: Personal Information -->
                 <div class="form-step active" id="step1">
                     <h3 class="form-title">Personal Information</h3>
@@ -370,26 +367,30 @@
                     <div class="row g-2">
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
+                                <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name" required>
                                 <label for="firstName">First Name (Required)</label>
+                                <div class="error-message" id="firstNameError">Please enter your first name</div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
+                                <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name" required>
                                 <label for="lastName">Last Name (Required)</label>
+                                <div class="error-message" id="lastNameError">Please enter your last name</div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="form-floating mt-2">
-                        <input type="tel" class="form-control" id="phone" placeholder="Phone" required>
+                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone" required>
                         <label for="phone">Phone (Required)</label>
+                        <div class="error-message" id="phoneError">Please enter a valid phone number</div>
                     </div>
                     
                     <div class="form-floating mt-2">
-                        <input type="email" class="form-control" id="email" placeholder="Email" required>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                         <label for="email">Email (Required)</label>
+                        <div class="error-message" id="emailError">Please enter a valid email address</div>
                     </div>
                     
                     <div class="form-footer">
@@ -402,21 +403,24 @@
                     <h3 class="form-title">More Information</h3>
                     
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="streetAddress" placeholder="Street Address" required>
+                        <input type="text" class="form-control" id="streetAddress" name="streetAddress" placeholder="Street Address" required>
                         <label for="streetAddress">Street Address (Required)</label>
+                        <div class="error-message" id="streetAddressError">Please enter your street address</div>
                     </div>
                     
                     <div class="row g-2 mt-2">
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="city" placeholder="City" required>
+                                <input type="text" class="form-control" id="city" name="city" placeholder="City" required>
                                 <label for="city">City (Required)</label>
+                                <div class="error-message" id="cityError">Please enter your city</div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="state" placeholder="State/Province" required>
+                                <input type="text" class="form-control" id="state" name="state" placeholder="State/Province" required>
                                 <label for="state">State/Province (Required)</label>
+                                <div class="error-message" id="stateError">Please enter your state/province</div>
                             </div>
                         </div>
                     </div>
@@ -424,255 +428,23 @@
                     <div class="row g-2 mt-2">
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="zipCode" placeholder="ZIP/Postal Code" required>
+                                <input type="text" class="form-control" id="zipCode" name="zipCode" placeholder="ZIP/Postal Code" required>
                                 <label for="zipCode">ZIP/Postal Code (Required)</label>
+                                <div class="error-message" id="zipCodeError">Please enter your ZIP/postal code</div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <select class="form-select" id="country" required>
+                                <select class="form-select" id="country" name="country" required>
                                     <option value="" selected disabled>Select Country</option>
-                                    <option value="AF">Afghanistan</option>
-                                    <option value="AL">Albania</option>
-                                    <option value="DZ">Algeria</option>
-                                    <option value="AS">American Samoa</option>
-                                    <option value="AD">Andorra</option>
-                                    <option value="AO">Angola</option>
-                                    <option value="AI">Anguilla</option>
-                                    <option value="AQ">Antarctica</option>
-                                    <option value="AG">Antigua and Barbuda</option>
-                                    <option value="AR">Argentina</option>
-                                    <option value="AM">Armenia</option>
-                                    <option value="AW">Aruba</option>
-                                    <option value="AU">Australia</option>
-                                    <option value="AT">Austria</option>
-                                    <option value="AZ">Azerbaijan</option>
-                                    <option value="BS">Bahamas</option>
-                                    <option value="BH">Bahrain</option>
-                                    <option value="BD">Bangladesh</option>
-                                    <option value="BB">Barbados</option>
-                                    <option value="BY">Belarus</option>
-                                    <option value="BE">Belgium</option>
-                                    <option value="BZ">Belize</option>
-                                    <option value="BJ">Benin</option>
-                                    <option value="BM">Bermuda</option>
-                                    <option value="BT">Bhutan</option>
-                                    <option value="BO">Bolivia</option>
-                                    <option value="BA">Bosnia and Herzegovina</option>
-                                    <option value="BW">Botswana</option>
-                                    <option value="BV">Bouvet Island</option>
-                                    <option value="BR">Brazil</option>
-                                    <option value="IO">British Indian Ocean Territory</option>
-                                    <option value="BN">Brunei Darussalam</option>
-                                    <option value="BG">Bulgaria</option>
-                                    <option value="BF">Burkina Faso</option>
-                                    <option value="BI">Burundi</option>
-                                    <option value="KH">Cambodia</option>
-                                    <option value="CM">Cameroon</option>
-                                    <option value="CA">Canada</option>
-                                    <option value="CV">Cape Verde</option>
-                                    <option value="KY">Cayman Islands</option>
-                                    <option value="CF">Central African Republic</option>
-                                    <option value="TD">Chad</option>
-                                    <option value="CL">Chile</option>
-                                    <option value="CN">China</option>
-                                    <option value="CX">Christmas Island</option>
-                                    <option value="CC">Cocos (Keeling) Islands</option>
-                                    <option value="CO">Colombia</option>
-                                    <option value="KM">Comoros</option>
-                                    <option value="CG">Congo</option>
-                                    <option value="CD">Congo, Democratic Republic</option>
-                                    <option value="CK">Cook Islands</option>
-                                    <option value="CR">Costa Rica</option>
-                                    <option value="CI">Côte d'Ivoire</option>
-                                    <option value="HR">Croatia</option>
-                                    <option value="CU">Cuba</option>
-                                    <option value="CY">Cyprus</option>
-                                    <option value="CZ">Czech Republic</option>
-                                    <option value="DK">Denmark</option>
-                                    <option value="DJ">Djibouti</option>
-                                    <option value="DM">Dominica</option>
-                                    <option value="DO">Dominican Republic</option>
-                                    <option value="EC">Ecuador</option>
-                                    <option value="EG">Egypt</option>
-                                    <option value="SV">El Salvador</option>
-                                    <option value="GQ">Equatorial Guinea</option>
-                                    <option value="ER">Eritrea</option>
-                                    <option value="EE">Estonia</option>
-                                    <option value="ET">Ethiopia</option>
-                                    <option value="FK">Falkland Islands (Malvinas)</option>
-                                    <option value="FO">Faroe Islands</option>
-                                    <option value="FJ">Fiji</option>
-                                    <option value="FI">Finland</option>
-                                    <option value="FR">France</option>
-                                    <option value="GF">French Guiana</option>
-                                    <option value="PF">French Polynesia</option>
-                                    <option value="TF">French Southern Territories</option>
-                                    <option value="GA">Gabon</option>
-                                    <option value="GM">Gambia</option>
-                                    <option value="GE">Georgia</option>
-                                    <option value="DE">Germany</option>
-                                    <option value="GH">Ghana</option>
-                                    <option value="GI">Gibraltar</option>
-                                    <option value="GR">Greece</option>
-                                    <option value="GL">Greenland</option>
-                                    <option value="GD">Grenada</option>
-                                    <option value="GP">Guadeloupe</option>
-                                    <option value="GU">Guam</option>
-                                    <option value="GT">Guatemala</option>
-                                    <option value="GN">Guinea</option>
-                                    <option value="GW">Guinea-Bissau</option>
-                                    <option value="GY">Guyana</option>
-                                    <option value="HT">Haiti</option>
-                                    <option value="HM">Heard Island and McDonald Islands</option>
-                                    <option value="VA">Holy See (Vatican City State)</option>
-                                    <option value="HN">Honduras</option>
-                                    <option value="HK">Hong Kong</option>
-                                    <option value="HU">Hungary</option>
-                                    <option value="IS">Iceland</option>
-                                    <option value="IN">India</option>
-                                    <option value="ID">Indonesia</option>
-                                    <option value="IR">Iran, Islamic Republic</option>
-                                    <option value="IQ">Iraq</option>
-                                    <option value="IE">Ireland</option>
-                                    <option value="IL">Israel</option>
-                                    <option value="IT">Italy</option>
-                                    <option value="JM">Jamaica</option>
-                                    <option value="JP">Japan</option>
-                                    <option value="JO">Jordan</option>
-                                    <option value="KZ">Kazakhstan</option>
-                                    <option value="KE">Kenya</option>
-                                    <option value="KI">Kiribati</option>
-                                    <option value="KP">Korea, Democratic People's Republic</option>
-                                    <option value="KR">Korea, Republic</option>
-                                    <option value="KW">Kuwait</option>
-                                    <option value="KG">Kyrgyzstan</option>
-                                    <option value="LA">Lao People's Democratic Republic</option>
-                                    <option value="LV">Latvia</option>
-                                    <option value="LB">Lebanon</option>
-                                    <option value="LS">Lesotho</option>
-                                    <option value="LR">Liberia</option>
-                                    <option value="LY">Libyan Arab Jamahiriya</option>
-                                    <option value="LI">Liechtenstein</option>
-                                    <option value="LT">Lithuania</option>
-                                    <option value="LU">Luxembourg</option>
-                                    <option value="MO">Macao</option>
-                                    <option value="MK">Macedonia, Republic</option>
-                                    <option value="MG">Madagascar</option>
-                                    <option value="MW">Malawi</option>
-                                    <option value="MY">Malaysia</option>
-                                    <option value="MV">Maldives</option>
-                                    <option value="ML">Mali</option>
-                                    <option value="MT">Malta</option>
-                                    <option value="MH">Marshall Islands</option>
-                                    <option value="MQ">Martinique</option>
-                                    <option value="MR">Mauritania</option>
-                                    <option value="MU">Mauritius</option>
-                                    <option value="YT">Mayotte</option>
-                                    <option value="MX">Mexico</option>
-                                    <option value="FM">Micronesia, Federated States</option>
-                                    <option value="MD">Moldova, Republic</option>
-                                    <option value="MC">Monaco</option>
-                                    <option value="MN">Mongolia</option>
-                                    <option value="MS">Montserrat</option>
-                                    <option value="MA">Morocco</option>
-                                    <option value="MZ">Mozambique</option>
-                                    <option value="MM">Myanmar</option>
-                                    <option value="NA">Namibia</option>
-                                    <option value="NR">Nauru</option>
-                                    <option value="NP">Nepal</option>
-                                    <option value="NL">Netherlands</option>
-                                    <option value="AN">Netherlands Antilles</option>
-                                    <option value="NC">New Caledonia</option>
-                                    <option value="NZ">New Zealand</option>
-                                    <option value="NI">Nicaragua</option>
-                                    <option value="NE">Niger</option>
-                                    <option value="NG">Nigeria</option>
-                                    <option value="NU">Niue</option>
-                                    <option value="NF">Norfolk Island</option>
-                                    <option value="MP">Northern Mariana Islands</option>
-                                    <option value="NO">Norway</option>
-                                    <option value="OM">Oman</option>
-                                    <option value="PK">Pakistan</option>
-                                    <option value="PW">Palau</option>
-                                    <option value="PS">Palestinian Territory, Occupied</option>
-                                    <option value="PA">Panama</option>
-                                    <option value="PG">Papua New Guinea</option>
-                                    <option value="PY">Paraguay</option>
-                                    <option value="PE">Peru</option>
-                                    <option value="PH">Philippines</option>
-                                    <option value="PN">Pitcairn</option>
-                                    <option value="PL">Poland</option>
-                                    <option value="PT">Portugal</option>
-                                    <option value="PR">Puerto Rico</option>
-                                    <option value="QA">Qatar</option>
-                                    <option value="RE">Réunion</option>
-                                    <option value="RO">Romania</option>
-                                    <option value="RU">Russian Federation</option>
-                                    <option value="RW">Rwanda</option>
-                                    <option value="SH">Saint Helena</option>
-                                    <option value="KN">Saint Kitts and Nevis</option>
-                                    <option value="LC">Saint Lucia</option>
-                                    <option value="PM">Saint Pierre and Miquelon</option>
-                                    <option value="VC">Saint Vincent and the Grenadines</option>
-                                    <option value="WS">Samoa</option>
-                                    <option value="SM">San Marino</option>
-                                    <option value="ST">Sao Tome and Principe</option>
-                                    <option value="SA">Saudi Arabia</option>
-                                    <option value="SN">Senegal</option>
-                                    <option value="CS">Serbia and Montenegro</option>
-                                    <option value="SC">Seychelles</option>
-                                    <option value="SL">Sierra Leone</option>
-                                    <option value="SG">Singapore</option>
-                                    <option value="SK">Slovakia</option>
-                                    <option value="SI">Slovenia</option>
-                                    <option value="SB">Solomon Islands</option>
-                                    <option value="SO">Somalia</option>
-                                    <option value="ZA">South Africa</option>
-                                    <option value="GS">South Georgia and the South Sandwich Islands</option>
-                                    <option value="ES">Spain</option>
-                                    <option value="LK">Sri Lanka</option>
-                                    <option value="SD">Sudan</option>
-                                    <option value="SR">Suriname</option>
-                                    <option value="SJ">Svalbard and Jan Mayen</option>
-                                    <option value="SZ">Swaziland</option>
-                                    <option value="SE">Sweden</option>
-                                    <option value="CH">Switzerland</option>
-                                    <option value="SY">Syrian Arab Republic</option>
-                                    <option value="TW">Taiwan, Province of China</option>
-                                    <option value="TJ">Tajikistan</option>
-                                    <option value="TZ">Tanzania, United Republic</option>
-                                    <option value="TH">Thailand</option>
-                                    <option value="TL">Timor-Leste</option>
-                                    <option value="TG">Togo</option>
-                                    <option value="TK">Tokelau</option>
-                                    <option value="TO">Tonga</option>
-                                    <option value="TT">Trinidad and Tobago</option>
-                                    <option value="TN">Tunisia</option>
-                                    <option value="TR">Turkey</option>
-                                    <option value="TM">Turkmenistan</option>
-                                    <option value="TC">Turks and Caicos Islands</option>
-                                    <option value="TV">Tuvalu</option>
-                                    <option value="UG">Uganda</option>
-                                    <option value="UA">Ukraine</option>
-                                    <option value="AE">United Arab Emirates</option>
-                                    <option value="GB">United Kingdom</option>
                                     <option value="US">United States</option>
-                                    <option value="UM">United States Minor Outlying Islands</option>
-                                    <option value="UY">Uruguay</option>
-                                    <option value="UZ">Uzbekistan</option>
-                                    <option value="VU">Vanuatu</option>
-                                    <option value="VE">Venezuela</option>
-                                    <option value="VN">Viet Nam</option>
-                                    <option value="VG">Virgin Islands, British</option>
-                                    <option value="VI">Virgin Islands, U.S.</option>
-                                    <option value="WF">Wallis and Futuna</option>
-                                    <option value="EH">Western Sahara</option>
-                                    <option value="YE">Yemen</option>
-                                    <option value="ZM">Zambia</option>
-                                    <option value="ZW">Zimbabwe</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="GB">United Kingdom</option>
+                                    <option value="AU">Australia</option>
+                                    <!-- Other countries would be listed here -->
                                 </select>
                                 <label for="country">Country (Required)</label>
+                                <div class="error-message" id="countryError">Please select your country</div>
                             </div>
                         </div>
                     </div>
@@ -688,23 +460,35 @@
                                 <input type="radio" id="female" name="gender" value="female">
                                 <label for="female">Female</label>
                             </div>
+                            <div class="radio-option">
+                                <input type="radio" id="other" name="gender" value="other">
+                                <label for="other">Other</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="preferNot" name="gender" value="preferNot">
+                                <label for="preferNot">Prefer not to say</label>
+                            </div>
                         </div>
+                        <div class="error-message" id="genderError">Please select your gender</div>
                     </div>
                     
                     <div class="mt-2">
                         <label class="form-label">Date of Birth (Required)</label>
                         <div class="date-inputs">
                             <div class="form-floating">
-                                <input type="number" class="form-control" id="birthMonth" placeholder="MM" min="1" max="12" required>
+                                <input type="number" class="form-control" id="birthMonth" name="birthMonth" placeholder="MM" min="1" max="12" required>
                                 <label for="birthMonth">MM</label>
+                                <div class="error-message" id="birthMonthError">Please enter a valid month (1-12)</div>
                             </div>
                             <div class="form-floating">
-                                <input type="number" class="form-control" id="birthDay" placeholder="DD" min="1" max="31" required>
+                                <input type="number" class="form-control" id="birthDay" name="birthDay" placeholder="DD" min="1" max="31" required>
                                 <label for="birthDay">DD</label>
+                                <div class="error-message" id="birthDayError">Please enter a valid day (1-31)</div>
                             </div>
                             <div class="form-floating">
-                                <input type="number" class="form-control" id="birthYear" placeholder="YYYY" min="1900" max="2023" required>
+                                <input type="number" class="form-control" id="birthYear" name="birthYear" placeholder="YYYY" min="1900" max="2023" required>
                                 <label for="birthYear">YYYY</label>
+                                <div class="error-message" id="birthYearError">Please enter a valid year (1900-2023)</div>
                             </div>
                         </div>
                     </div>
@@ -720,23 +504,27 @@
                     <h3 class="form-title">Project Details</h3>
                     
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="projectTitle" placeholder="Project Title" required>
+                        <input type="text" class="form-control" id="projectTitle" name="projectTitle" placeholder="Project Title" required>
                         <label for="projectTitle">Title or name of your project (Required)</label>
+                        <div class="error-message" id="projectTitleError">Please enter your project title</div>
                     </div>
                     
                     <div class="form-floating mt-2">
-                        <textarea class="form-control" id="projectDescription" placeholder="Project Description" style="height: 100px" required></textarea>
+                        <textarea class="form-control" id="projectDescription" name="projectDescription" placeholder="Project Description" style="height: 100px" required></textarea>
                         <label for="projectDescription">Describe your business idea briefly (Required)</label>
+                        <div class="error-message" id="projectDescriptionError">Please describe your project</div>
                     </div>
                     
                     <div class="form-floating mt-2">
-                        <textarea class="form-control" id="projectUniqueness" placeholder="What makes unique" style="height: 100px" required></textarea>
+                        <textarea class="form-control" id="projectUniqueness" name="projectUniqueness" placeholder="What makes unique" style="height: 100px" required></textarea>
                         <label for="projectUniqueness">What makes this idea unique or important? (Required)</label>
+                        <div class="error-message" id="projectUniquenessError">Please explain what makes your project unique</div>
                     </div>
                     
                     <div class="form-floating mt-2">
-                        <textarea class="form-control" id="targetMarket" placeholder="Target Market" style="height: 100px" required></textarea>
+                        <textarea class="form-control" id="targetMarket" name="targetMarket" placeholder="Target Market" style="height: 100px" required></textarea>
                         <label for="targetMarket">Target customers or market (Required)</label>
+                        <div class="error-message" id="targetMarketError">Please describe your target market</div>
                     </div>
                     
                     <div class="form-footer">
@@ -750,8 +538,9 @@
                     <h3 class="form-title">Final Details</h3>
                     
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="businessLocation" placeholder="Business Location" required>
+                        <input type="text" class="form-control" id="businessLocation" name="businessLocation" placeholder="Business Location" required>
                         <label for="businessLocation">Preferred location of business operations (Required)</label>
+                        <div class="error-message" id="businessLocationError">Please enter your preferred business location</div>
                     </div>
                     
                     <div class="mt-3">
@@ -766,6 +555,7 @@
                                 <label for="capitalNo">No</label>
                             </div>
                         </div>
+                        <div class="error-message" id="hasCapitalError">Please select an option</div>
                     </div>
                     
                     <div class="mt-3">
@@ -780,6 +570,7 @@
                                 <label for="teamOwn">Work with my own</label>
                             </div>
                         </div>
+                        <div class="error-message" id="teamPreferenceError">Please select your team preference</div>
                     </div>
                     
                     <div class="mt-3">
@@ -798,21 +589,31 @@
                                 <label for="involvementNone">No involvement</label>
                             </div>
                         </div>
+                        <div class="error-message" id="involvementError">Please select your involvement preference</div>
                     </div>
                     
                     <div class="mt-3">
                         <label class="form-label">Upload business plan, video, or document (optional)</label>
-                        <div class="file-upload" onclick="document.getElementById('fileUpload').click()">
+                        <div class="file-upload" id="fileUploadContainer">
                             <i class="fas fa-cloud-upload-alt"></i>
-                            <p>Click to upload files</p>
-                            <small>Max. 200 MB</small>
-                            <input type="file" id="fileUpload" style="display: none;">
+                            <p id="fileUploadText">Click to upload files</p>
+                            <small class="file-info">Max. 200 MB (PDF, DOC, PPT, MP4)</small>
+                            <input type="file" id="fileUpload" name="businessPlan" style="display: none;" accept=".pdf,.doc,.docx,.ppt,.pptx,.mp4">
                         </div>
+                        <div class="error-message" id="fileUploadError"></div>
+                    </div>
+                    
+                    <div class="form-check mt-3">
+                        <input class="form-check-input" type="checkbox" id="termsAgreement" name="termsAgreement" required>
+                        <label class="form-check-label" for="termsAgreement">
+                            I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms and Conditions</a>
+                        </label>
+                        <div class="error-message" id="termsAgreementError">You must agree to the terms and conditions</div>
                     </div>
                     
                     <div class="form-footer">
                         <button type="button" class="btn btn-outline-primary" onclick="prevStep(4)">Back</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Submit Application</button>
                     </div>
                 </div>
             </form>
@@ -839,55 +640,249 @@
         </a>
     </nav>
     
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Application Submitted!</h3>
+                    <p>Your project management application has been successfully submitted. Our team will review your proposal and contact you within 5-7 business days.</p>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Terms Modal -->
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Terms and Conditions</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Project Management Terms</h6>
+                    <p>By submitting this application, you agree to the following terms:</p>
+                    <ol>
+                        <li>All information provided must be accurate and complete</li>
+                        <li>Submission does not guarantee approval or funding</li>
+                        <li>Confidential information should be marked appropriately</li>
+                        <li>We may contact you for additional information</li>
+                        <li>Review process may take 4-6 weeks</li>
+                        <li>We reserve the right to reject any application without explanation</li>
+                    </ol>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function nextStep(currentStep) {
-            if (validateStep(currentStep)) {
-                document.getElementById(`step${currentStep}`).classList.remove('active');
-                document.getElementById(`step${currentStep + 1}`).classList.add('active');
-                
-                document.getElementById(`step${currentStep}-indicator`).classList.remove('active');
-                document.getElementById(`step${currentStep + 1}-indicator`).classList.add('active');
-                
-                // Scroll to top of form on step change
-                document.querySelector('.form-container').scrollTo(0, 0);
-            }
-        }
-        
-        function prevStep(currentStep) {
+    // Step navigation
+    function nextStep(currentStep) {
+        if (validateStep(currentStep)) {
             document.getElementById(`step${currentStep}`).classList.remove('active');
-            document.getElementById(`step${currentStep - 1}`).classList.add('active');
-            
             document.getElementById(`step${currentStep}-indicator`).classList.remove('active');
-            document.getElementById(`step${currentStep - 1}-indicator`).classList.add('active');
-            
-            // Scroll to top of form on step change
+            document.getElementById(`step${currentStep}-indicator`).classList.add('completed');
+
+            document.getElementById(`step${currentStep + 1}`).classList.add('active');
+            document.getElementById(`step${currentStep + 1}-indicator`).classList.add('active');
+
             document.querySelector('.form-container').scrollTo(0, 0);
         }
-        
-        function validateStep(stepNumber) {
-            if (stepNumber === 1) {
-                const requiredFields = ['firstName', 'lastName', 'phone', 'email'];
-                for (const field of requiredFields) {
-                    if (!document.getElementById(field).value) {
-                        alert(`Please fill in ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`);
-                        return false;
-                    }
+    }
+
+    function prevStep(currentStep) {
+        document.getElementById(`step${currentStep}`).classList.remove('active');
+        document.getElementById(`step${currentStep}-indicator`).classList.remove('active');
+
+        document.getElementById(`step${currentStep - 1}`).classList.add('active');
+        document.getElementById(`step${currentStep - 1}-indicator`).classList.add('active');
+
+        document.querySelector('.form-container').scrollTo(0, 0);
+    }
+
+    // Step-wise validation
+    function validateStep(stepNumber) {
+        let isValid = true;
+
+        if (stepNumber === 1) {
+            const requiredFields = [
+                { id: 'firstName', errorId: 'firstNameError', message: 'Please enter your first name' },
+                { id: 'lastName', errorId: 'lastNameError', message: 'Please enter your last name' },
+                { id: 'phone', errorId: 'phoneError', message: 'Please enter a valid phone number', regex: /^[\d\s\+\-]{10,}$/ },
+                { id: 'email', errorId: 'emailError', message: 'Please enter a valid email address', regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ }
+            ];
+
+            requiredFields.forEach(field => {
+                const element = document.getElementById(field.id);
+                const errorElement = document.getElementById(field.errorId);
+
+                if (!element.value || (field.regex && !field.regex.test(element.value))) {
+                    element.classList.add('is-invalid');
+                    errorElement.textContent = field.message;
+                    errorElement.style.display = 'block';
+                    isValid = false;
+                } else {
+                    element.classList.remove('is-invalid');
+                    errorElement.style.display = 'none';
                 }
+            });
+
+        } else if (stepNumber === 2) {
+            const requiredFields = [
+                { id: 'streetAddress', errorId: 'streetAddressError' },
+                { id: 'city', errorId: 'cityError' },
+                { id: 'state', errorId: 'stateError' },
+                { id: 'zipCode', errorId: 'zipCodeError' },
+                { id: 'country', errorId: 'countryError' },
+                { id: 'birthMonth', errorId: 'birthMonthError' },
+                { id: 'birthDay', errorId: 'birthDayError' },
+                { id: 'birthYear', errorId: 'birthYearError' }
+            ];
+
+            requiredFields.forEach(field => {
+                const element = document.getElementById(field.id);
+                const errorElement = document.getElementById(field.errorId);
+
+                if (!element.value) {
+                    element.classList.add('is-invalid');
+                    errorElement.style.display = 'block';
+                    isValid = false;
+                } else {
+                    element.classList.remove('is-invalid');
+                    errorElement.style.display = 'none';
+                }
+            });
+
+            if (!document.querySelector('input[name="gender"]:checked')) {
+                document.getElementById('genderError').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('genderError').style.display = 'none';
             }
-            return true;
+
+        } else if (stepNumber === 3) {
+            const requiredFields = [
+                { id: 'projectTitle', errorId: 'projectTitleError' },
+                { id: 'projectDescription', errorId: 'projectDescriptionError' },
+                { id: 'projectUniqueness', errorId: 'projectUniquenessError' },
+                { id: 'targetMarket', errorId: 'targetMarketError' }
+            ];
+
+            requiredFields.forEach(field => {
+                const element = document.getElementById(field.id);
+                const errorElement = document.getElementById(field.errorId);
+
+                if (!element.value) {
+                    element.classList.add('is-invalid');
+                    errorElement.style.display = 'block';
+                    isValid = false;
+                } else {
+                    element.classList.remove('is-invalid');
+                    errorElement.style.display = 'none';
+                }
+            });
         }
-        
-        document.getElementById('multiStepForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Form submitted successfully!');
-            // Form submission logic would go here
+
+        return isValid;
+    }
+
+    // File Upload
+    document.getElementById('fileUploadContainer').addEventListener('click', () => {
+        document.getElementById('fileUpload').click();
+    });
+
+    document.getElementById('fileUpload').addEventListener('change', (e) => {
+        const fileInput = e.target;
+        const fileNameDisplay = document.getElementById('fileUploadText');
+        const errorElement = document.getElementById('fileUploadError');
+
+        if (fileInput.files.length) {
+            const file = fileInput.files[0];
+            const validTypes = [
+                'application/pdf', 'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                'application/vnd.ms-powerpoint',
+                'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+                'video/mp4'
+            ];
+            const maxSize = 200 * 1024 * 1024;
+
+            if (!validTypes.includes(file.type)) {
+                errorElement.textContent = 'Please upload a PDF, DOC, PPT, or MP4 file';
+                errorElement.style.display = 'block';
+                fileInput.value = '';
+                fileNameDisplay.textContent = 'Click to upload files';
+            } else if (file.size > maxSize) {
+                errorElement.textContent = 'File size exceeds 200MB limit';
+                errorElement.style.display = 'block';
+                fileInput.value = '';
+                fileNameDisplay.textContent = 'Click to upload files';
+            } else {
+                fileNameDisplay.textContent = file.name;
+                errorElement.style.display = 'none';
+            }
+        }
+    });
+
+    // Form Submission
+    document.getElementById('pmForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        let isValid = true;
+
+        const requiredFields = [
+            { id: 'businessLocation', errorId: 'businessLocationError', message: 'Please enter your preferred business location' },
+            { id: 'termsAgreement', errorId: 'termsAgreementError', message: 'You must agree to the terms and conditions' }
+        ];
+
+        requiredFields.forEach(field => {
+            const element = document.getElementById(field.id);
+            const errorElement = document.getElementById(field.errorId);
+
+            if ((element.type === 'checkbox' && !element.checked) || (!element.checked && !element.value)) {
+                element.classList.add('is-invalid');
+                errorElement.textContent = field.message;
+                errorElement.style.display = 'block';
+                isValid = false;
+            } else {
+                element.classList.remove('is-invalid');
+                errorElement.style.display = 'none';
+            }
         });
-        
-        document.getElementById('fileUpload').addEventListener('change', function(e) {
-            const fileName = e.target.files[0]?.name || 'No file chosen';
-            document.querySelector('.file-upload p').textContent = fileName;
+
+        const radioGroups = [
+            { name: 'hasCapital', errorId: 'hasCapitalError' },
+            { name: 'teamPreference', errorId: 'teamPreferenceError' },
+            { name: 'involvement', errorId: 'involvementError' }
+        ];
+
+        radioGroups.forEach(group => {
+            if (!document.querySelector(`input[name="${group.name}"]:checked`)) {
+                document.getElementById(group.errorId).style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById(group.errorId).style.display = 'none';
+            }
         });
-    </script>
-</body>
-</html>
+
+        if (!isValid) {
+            document.querySelector('.form-container').scrollTo(0, 0);
+            document.querySelector('button[type="submit"]').disabled = false;
+            return;
+        }
+
+        // Optional: Show confirmation modal before actual submit
+        // new bootstrap.Modal(document.getElementById('confirmationModal')).show();
+
+        e.target.submit();  // or use AJAX here if needed
+    });
+</script>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visa Application Form</title>
+    <title>Joint Venture Application Form</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -200,15 +200,6 @@
             font-weight: 500;
         }
         
-        .date-inputs {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .date-inputs .form-floating {
-            flex: 1;
-        }
-        
         .form-footer {
             display: flex;
             justify-content: space-between;
@@ -328,8 +319,8 @@
     <div class="container py-3">
         <div class="form-container">
             <div class="form-header">
-                <h2>Visa Application Form</h2>
-                <p>Complete all steps to submit your application</p>
+                <h2>Joint Venture Application</h2>
+                <p>Complete all steps to submit your joint venture proposal</p>
             </div>
             
             <div class="step-indicator">
@@ -339,7 +330,7 @@
                 </div>
                 <div class="step" id="step2-indicator">
                     <div class="step-number">2</div>
-                    <div class="step-label">Education & Travel</div>
+                    <div class="step-label">Innovation Details</div>
                 </div>
                 <div class="step" id="step3-indicator">
                     <div class="step-number">3</div>
@@ -347,7 +338,7 @@
                 </div>
             </div>
             
-            <form id="visaForm" action="{{ url_for('submit_visa') }}" method="POST" enctype="multipart/form-data" novalidate>
+            <form id="ventureForm" action="{{ url_for('submit_venture') }}" method="POST" enctype="multipart/form-data" novalidate>
                 <!-- Step 1: Personal Information -->
                 <div class="form-step active" id="step1">
                     <h3 class="form-title">Personal Information</h3>
@@ -369,73 +360,16 @@
                         </div>
                     </div>
                     
-                    <div class="mt-2">
-                        <label class="form-label">Date of Birth (Required)</label>
-                        <div class="date-inputs">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="month" name="month" placeholder="MM" maxlength="2" required pattern="(0[1-9]|1[0-2])">
-                                <label for="month">MM</label>
-                                <div class="error-message" id="monthError">Please enter a valid month (01-12)</div>
-                            </div>
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="day" name="day" placeholder="DD" maxlength="2" required pattern="(0[1-9]|[12][0-9]|3[01])">
-                                <label for="day">DD</label>
-                                <div class="error-message" id="dayError">Please enter a valid day</div>
-                            </div>
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="year" name="year" placeholder="YYYY" maxlength="4" required pattern="\d{4}">
-                                <label for="year">YYYY</label>
-                                <div class="error-message" id="yearError">Please enter a valid year</div>
-                            </div>
-                        </div>
+                    <div class="form-floating mt-2">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                        <label for="email">Email (Required)</label>
+                        <div class="error-message" id="emailError">Please enter a valid email address</div>
                     </div>
                     
                     <div class="form-floating mt-2">
-                        <input type="text" class="form-control" id="nationality" name="nationality" placeholder="Nationality" required>
-                        <label for="nationality">Nationality (Required)</label>
-                        <div class="error-message" id="nationalityError">Please enter your nationality</div>
-                    </div>
-                    
-                    <div class="mt-3">
-                        <label class="form-label">Gender (Required)</label>
-                        <div class="radio-group">
-                            <div class="radio-option">
-                                <input type="radio" id="male" name="gender" value="male" required>
-                                <label for="male">Male</label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="female" name="gender" value="female">
-                                <label for="female">Female</label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="other" name="gender" value="other">
-                                <label for="other">Other</label>
-                            </div>
-                        </div>
-                        <div class="error-message" id="genderError">Please select your gender</div>
-                    </div>
-                    
-                    <div class="mt-3">
-                        <label class="form-label">Marital Status (Required)</label>
-                        <div class="radio-group">
-                            <div class="radio-option">
-                                <input type="radio" id="single" name="maritalStatus" value="single" required>
-                                <label for="single">Single</label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="married" name="maritalStatus" value="married">
-                                <label for="married">Married</label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="divorced" name="maritalStatus" value="divorced">
-                                <label for="divorced">Divorced</label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="widowed" name="maritalStatus" value="widowed">
-                                <label for="widowed">Widowed</label>
-                            </div>
-                        </div>
-                        <div class="error-message" id="maritalStatusError">Please select your marital status</div>
+                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone" required>
+                        <label for="phone">Phone (Required)</label>
+                        <div class="error-message" id="phoneError">Please enter a valid phone number</div>
                     </div>
                     
                     <div class="form-footer">
@@ -443,64 +377,58 @@
                     </div>
                 </div>
                 
-                <!-- Step 2: Education & Travel -->
+                <!-- Step 2: Innovation Details -->
                 <div class="form-step" id="step2">
-                    <h3 class="form-title">Education & Travel Information</h3>
+                    <h3 class="form-title">Innovation Details</h3>
                     
                     <div class="form-floating">
-                        <select class="form-select" id="educationLevel" name="educationLevel" required>
-                            <option value="" selected disabled>Select Highest Education Level</option>
-                            <option value="highschool">High School</option>
-                            <option value="diploma">Diploma</option>
-                            <option value="bachelor">Bachelor's Degree</option>
-                            <option value="master">Master's Degree</option>
-                            <option value="phd">PhD</option>
-                        </select>
-                        <label for="educationLevel">Highest Level of Education (Required)</label>
-                        <div class="error-message" id="educationLevelError">Please select your education level</div>
+                        <input type="text" class="form-control" id="innovationTitle" name="innovationTitle" placeholder="Innovation Title" required>
+                        <label for="innovationTitle">Innovation Title (Required)</label>
+                        <div class="error-message" id="innovationTitleError">Please enter your innovation title</div>
                     </div>
                     
                     <div class="form-floating mt-2">
-                        <input type="text" class="form-control" id="countryOfInterest" name="countryOfInterest" placeholder="Country" required>
-                        <label for="countryOfInterest">Country of Interest (Required)</label>
-                        <div class="error-message" id="countryOfInterestError">Please enter the country of interest</div>
+                        <textarea class="form-control" id="innovationDescription" name="innovationDescription" placeholder="Description" style="height: 120px" required></textarea>
+                        <label for="innovationDescription">Detailed Description (Required)</label>
+                        <div class="error-message" id="innovationDescriptionError">Please describe your innovation</div>
                     </div>
                     
                     <div class="mt-3">
-                        <label class="form-label">Purpose of Travel (Required)</label>
+                        <label class="form-label">Innovation Stage (Required)</label>
                         <div class="radio-group">
                             <div class="radio-option">
-                                <input type="radio" id="study" name="travelPurpose" value="study" required>
-                                <label for="study">Study</label>
+                                <input type="radio" id="concept" name="innovationStage" value="concept" required>
+                                <label for="concept">Concept</label>
                             </div>
                             <div class="radio-option">
-                                <input type="radio" id="work" name="travelPurpose" value="work">
-                                <label for="work">Work</label>
+                                <input type="radio" id="prototype" name="innovationStage" value="prototype">
+                                <label for="prototype">Prototype</label>
                             </div>
                             <div class="radio-option">
-                                <input type="radio" id="family" name="travelPurpose" value="family">
-                                <label for="family">Family</label>
+                                <input type="radio" id="patented" name="innovationStage" value="patented">
+                                <label for="patented">Patented</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="market" name="innovationStage" value="market">
+                                <label for="market">Market Ready</label>
                             </div>
                         </div>
-                        <div class="error-message" id="travelPurposeError">Please select your purpose of travel</div>
+                        <div class="error-message" id="innovationStageError">Please select the innovation stage</div>
                     </div>
                     
                     <div class="form-floating mt-2">
-                        <select class="form-select" id="languageProficiency" name="languageProficiency" required>
-                            <option value="" selected disabled>Select Language Proficiency</option>
-                            <option value="basic">Basic</option>
-                            <option value="intermediate">Intermediate</option>
-                            <option value="advanced">Advanced</option>
-                            <option value="native">Native</option>
+                        <select class="form-select" id="industry" name="industry" required>
+                            <option value="" selected disabled>Select Industry</option>
+                            <option value="tech">Technology</option>
+                            <option value="health">Healthcare</option>
+                            <option value="energy">Energy</option>
+                            <option value="agriculture">Agriculture</option>
+                            <option value="education">Education</option>
+                            <option value="manufacturing">Manufacturing</option>
+                            <option value="other">Other</option>
                         </select>
-                        <label for="languageProficiency">Language Proficiency (Required)</label>
-                        <div class="error-message" id="languageProficiencyError">Please select your language proficiency</div>
-                    </div>
-                    
-                    <div class="form-floating mt-2">
-                        <input type="text" class="form-control" id="passportNumber" name="passportNumber" placeholder="Passport Number" required>
-                        <label for="passportNumber">Passport Number (Required)</label>
-                        <div class="error-message" id="passportNumberError">Please enter your passport number</div>
+                        <label for="industry">Industry (Required)</label>
+                        <div class="error-message" id="industryError">Please select an industry</div>
                     </div>
                     
                     <div class="form-footer">
@@ -511,38 +439,43 @@
                 
                 <!-- Step 3: Documents -->
                 <div class="form-step" id="step3">
-                    <h3 class="form-title">Documents & Contact</h3>
+                    <h3 class="form-title">Documents & Additional Info</h3>
                     
                     <div class="mb-3">
-                        <label class="form-label">Resume/CV Upload (Required)</label>
-                        <div class="file-upload" id="resumeUpload">
+                        <label class="form-label">Innovation Proposal (Required)</label>
+                        <div class="file-upload" id="proposalUpload">
                             <i class="fas fa-cloud-upload-alt fa-2x mb-2"></i>
                             <p>Click to upload or drag and drop</p>
-                            <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required>
-                            <div class="file-info">Max. file size: 200 MB (PDF, DOC, DOCX)</div>
+                            <input type="file" id="proposal" name="proposal" accept=".pdf,.doc,.docx,.ppt,.pptx" required>
+                            <div class="file-info">PDF, DOC, PPT (Max. 200 MB)</div>
                         </div>
-                        <div id="resumeFileName" class="text-muted small"></div>
-                        <div class="error-message" id="resumeError">Please upload your resume/CV</div>
+                        <div id="proposalFileName" class="text-muted small"></div>
+                        <div class="error-message" id="proposalError">Please upload your proposal document</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Supporting Documents (Optional)</label>
+                        <div class="file-upload" id="supportingUpload">
+                            <i class="fas fa-cloud-upload-alt fa-2x mb-2"></i>
+                            <p>Click to upload or drag and drop</p>
+                            <input type="file" id="supportingDocs" name="supportingDocs" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" multiple>
+                            <div class="file-info">Images, PDFs (Max. 200 MB total)</div>
+                        </div>
+                        <div id="supportingFileNames" class="text-muted small"></div>
                     </div>
                     
                     <div class="form-floating">
-                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone" required>
-                        <label for="phone">Phone (Required)</label>
-                        <div class="error-message" id="phoneError">Please enter a valid phone number</div>
-                    </div>
-                    
-                    <div class="form-floating mt-2">
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-                        <label for="email">Email (Required)</label>
-                        <div class="error-message" id="emailError">Please enter a valid email address</div>
+                        <input type="url" class="form-control" id="website" name="website" placeholder="Website">
+                        <label for="website">Website (Optional)</label>
+                        <div class="error-message" id="websiteError">Please enter a valid URL (including http:// or https://)</div>
                     </div>
                     
                     <div class="form-check mt-3">
-                        <input class="form-check-input" type="checkbox" id="termsAgreement" name="termsAgreement" required>
-                        <label class="form-check-label" for="termsAgreement">
-                            I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms and Conditions</a> and <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a>
+                        <input class="form-check-input" type="checkbox" id="terms" name="terms" required>
+                        <label class="form-check-label" for="terms">
+                            I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms and Conditions</a>
                         </label>
-                        <div class="error-message" id="termsAgreementError">You must agree to the terms and conditions</div>
+                        <div class="error-message" id="termsError">You must agree to the terms and conditions</div>
                     </div>
                     
                     <div class="form-footer">
@@ -583,7 +516,7 @@
                         <i class="fas fa-check-circle"></i>
                     </div>
                     <h3>Application Submitted!</h3>
-                    <p>Your visa application has been successfully submitted. We'll contact you within 3-5 business days.</p>
+                    <p>Your joint venture application has been successfully submitted. Our team will review your proposal and contact you within 5-7 business days.</p>
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -599,25 +532,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Terms and conditions content goes here...</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Privacy Modal -->
-    <div class="modal fade" id="privacyModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Privacy Policy</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Privacy policy content goes here...</p>
+                    <h6>Joint Venture Agreement Terms</h6>
+                    <p>By submitting this application, you agree to the following terms:</p>
+                    <ol>
+                        <li>All information provided must be accurate and complete</li>
+                        <li>Submission does not guarantee partnership or funding</li>
+                        <li>Confidential information should be marked appropriately</li>
+                        <li>We may contact you for additional information</li>
+                        <li>Review process may take 4-6 weeks</li>
+                    </ol>
+                    <p>Full terms available upon request.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -628,26 +552,93 @@
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Form navigation
+        // File upload handling
+        document.getElementById('proposalUpload').addEventListener('click', function() {
+            document.getElementById('proposal').click();
+        });
+        
+        document.getElementById('proposal').addEventListener('change', function(e) {
+            const fileInput = e.target;
+            const fileNameDisplay = document.getElementById('proposalFileName');
+            const errorElement = document.getElementById('proposalError');
+            
+            if (fileInput.files.length) {
+                const file = fileInput.files[0];
+                const validTypes = ['application/pdf', 'application/msword', 
+                                  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                  'application/vnd.ms-powerpoint', 
+                                  'application/vnd.openxmlformats-officedocument.presentationml.presentation'];
+                const maxSize = 200 * 1024 * 1024; // 200MB
+                
+                if (!validTypes.includes(file.type)) {
+                    errorElement.textContent = 'Please upload a PDF, DOC, DOCX, PPT, or PPTX file';
+                    errorElement.style.display = 'block';
+                    fileInput.value = '';
+                    fileNameDisplay.textContent = '';
+                } else if (file.size > maxSize) {
+                    errorElement.textContent = 'File size exceeds 200MB limit';
+                    errorElement.style.display = 'block';
+                    fileInput.value = '';
+                    fileNameDisplay.textContent = '';
+                } else {
+                    fileNameDisplay.textContent = file.name;
+                    errorElement.style.display = 'none';
+                }
+            }
+        });
+        
+        document.getElementById('supportingUpload').addEventListener('click', function() {
+            document.getElementById('supportingDocs').click();
+        });
+        
+        document.getElementById('supportingDocs').addEventListener('change', function(e) {
+            const files = e.target.files;
+            const fileNameDisplay = document.getElementById('supportingFileNames');
+            let totalSize = 0;
+            
+            if (files.length === 0) {
+                fileNameDisplay.textContent = 'No files selected';
+            } else {
+                // Check total size
+                for (let i = 0; i < files.length; i++) {
+                    totalSize += files[i].size;
+                }
+                
+                const maxSize = 200 * 1024 * 1024; // 200MB
+                if (totalSize > maxSize) {
+                    fileNameDisplay.textContent = 'Total size exceeds 200MB limit';
+                    e.target.value = '';
+                } else if (files.length === 1) {
+                    fileNameDisplay.textContent = files[0].name;
+                } else {
+                    fileNameDisplay.textContent = `${files.length} files selected`;
+                }
+            }
+        });
+        
+        // Form step navigation
         function nextStep(currentStep) {
             if (validateStep(currentStep)) {
                 document.getElementById(`step${currentStep}`).classList.remove('active');
-                document.getElementById(`step${currentStep + 1}`).classList.add('active');
-                
                 document.getElementById(`step${currentStep}-indicator`).classList.remove('active');
+                document.getElementById(`step${currentStep}-indicator`).classList.add('completed');
+                
+                document.getElementById(`step${currentStep + 1}`).classList.add('active');
                 document.getElementById(`step${currentStep + 1}-indicator`).classList.add('active');
                 
+                // Scroll to top of form
                 document.querySelector('.form-container').scrollTo(0, 0);
             }
         }
         
         function prevStep(currentStep) {
             document.getElementById(`step${currentStep}`).classList.remove('active');
-            document.getElementById(`step${currentStep - 1}`).classList.add('active');
-            
             document.getElementById(`step${currentStep}-indicator`).classList.remove('active');
+            
+            document.getElementById(`step${currentStep - 1}`).classList.add('active');
             document.getElementById(`step${currentStep - 1}-indicator`).classList.add('active');
             
+            // Scroll to top of form
             document.querySelector('.form-container').scrollTo(0, 0);
         }
         
@@ -660,10 +651,8 @@
                 const requiredFields = [
                     {id: 'firstName', errorId: 'firstNameError', message: 'Please enter your first name'},
                     {id: 'lastName', errorId: 'lastNameError', message: 'Please enter your last name'},
-                    {id: 'month', errorId: 'monthError', message: 'Please enter a valid month (01-12)', regex: /^(0[1-9]|1[0-2])$/},
-                    {id: 'day', errorId: 'dayError', message: 'Please enter a valid day', regex: /^(0[1-9]|[12][0-9]|3[01])$/},
-                    {id: 'year', errorId: 'yearError', message: 'Please enter a valid year', regex: /^\d{4}$/},
-                    {id: 'nationality', errorId: 'nationalityError', message: 'Please enter your nationality'}
+                    {id: 'email', errorId: 'emailError', message: 'Please enter a valid email address', regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/},
+                    {id: 'phone', errorId: 'phoneError', message: 'Please enter a valid phone number', regex: /^[\d\s\+\-\(\)]{10,}$/}
                 ];
                 
                 requiredFields.forEach(field => {
@@ -681,29 +670,12 @@
                     }
                 });
                 
-                // Validate gender
-                if (!document.querySelector('input[name="gender"]:checked')) {
-                    document.getElementById('genderError').style.display = 'block';
-                    isValid = false;
-                } else {
-                    document.getElementById('genderError').style.display = 'none';
-                }
-                
-                // Validate marital status
-                if (!document.querySelector('input[name="maritalStatus"]:checked')) {
-                    document.getElementById('maritalStatusError').style.display = 'block';
-                    isValid = false;
-                } else {
-                    document.getElementById('maritalStatusError').style.display = 'none';
-                }
-                
             } else if (stepNumber === 2) {
-                // Validate education and travel
+                // Validate innovation details
                 const requiredFields = [
-                    {id: 'educationLevel', errorId: 'educationLevelError', message: 'Please select your education level'},
-                    {id: 'countryOfInterest', errorId: 'countryOfInterestError', message: 'Please enter the country of interest'},
-                    {id: 'languageProficiency', errorId: 'languageProficiencyError', message: 'Please select your language proficiency'},
-                    {id: 'passportNumber', errorId: 'passportNumberError', message: 'Please enter your passport number'}
+                    {id: 'innovationTitle', errorId: 'innovationTitleError', message: 'Please enter your innovation title'},
+                    {id: 'innovationDescription', errorId: 'innovationDescriptionError', message: 'Please describe your innovation'},
+                    {id: 'industry', errorId: 'industryError', message: 'Please select an industry'}
                 ];
                 
                 requiredFields.forEach(field => {
@@ -720,84 +692,50 @@
                     }
                 });
                 
-                // Validate travel purpose
-                if (!document.querySelector('input[name="travelPurpose"]:checked')) {
-                    document.getElementById('travelPurposeError').style.display = 'block';
+                // Validate innovation stage
+                if (!document.querySelector('input[name="innovationStage"]:checked')) {
+                    document.getElementById('innovationStageError').style.display = 'block';
                     isValid = false;
                 } else {
-                    document.getElementById('travelPurposeError').style.display = 'none';
+                    document.getElementById('innovationStageError').style.display = 'none';
                 }
             }
             
             return isValid;
         }
         
-        // File upload handling
-        document.getElementById('resumeUpload').addEventListener('click', function() {
-            document.getElementById('resume').click();
-        });
-        
-        document.getElementById('resume').addEventListener('change', function(e) {
-            const fileInput = e.target;
-            const fileNameDisplay = document.getElementById('resumeFileName');
-            const errorElement = document.getElementById('resumeError');
-            
-            if (fileInput.files.length) {
-                const file = fileInput.files[0];
-                const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-                const maxSize = 200 * 1024 * 1024; // 200MB
-                
-                if (!validTypes.includes(file.type)) {
-                    errorElement.textContent = 'Please upload a PDF, DOC, or DOCX file';
-                    errorElement.style.display = 'block';
-                    fileInput.value = '';
-                    fileNameDisplay.textContent = '';
-                } else if (file.size > maxSize) {
-                    errorElement.textContent = 'File size exceeds 200MB limit';
-                    errorElement.style.display = 'block';
-                    fileInput.value = '';
-                    fileNameDisplay.textContent = '';
-                } else {
-                    fileNameDisplay.textContent = file.name;
-                    errorElement.style.display = 'none';
-                }
-            }
-        });
-        
         // Form submission
-        document.getElementById('visaForm').addEventListener('submit', function(e) {
+        document.getElementById('ventureForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             // Validate step 3 fields
             let isValid = true;
             
-            const requiredFields = [
-                {id: 'resume', errorId: 'resumeError', message: 'Please upload your resume/CV'},
-                {id: 'phone', errorId: 'phoneError', message: 'Please enter a valid phone number'},
-                {id: 'email', errorId: 'emailError', message: 'Please enter a valid email address', regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/}
-            ];
-            
-            requiredFields.forEach(field => {
-                const element = document.getElementById(field.id);
-                const errorElement = document.getElementById(field.errorId);
-                
-                if (!element.value || (field.regex && !field.regex.test(element.value))) {
-                    element.classList.add('is-invalid');
-                    errorElement.textContent = field.message;
-                    errorElement.style.display = 'block';
-                    isValid = false;
-                } else {
-                    element.classList.remove('is-invalid');
-                    errorElement.style.display = 'none';
-                }
-            });
-            
-            // Validate terms agreement
-            if (!document.getElementById('termsAgreement').checked) {
-                document.getElementById('termsAgreementError').style.display = 'block';
+            // Validate proposal file
+            if (!document.getElementById('proposal').files.length) {
+                document.getElementById('proposalError').style.display = 'block';
                 isValid = false;
             } else {
-                document.getElementById('termsAgreementError').style.display = 'none';
+                document.getElementById('proposalError').style.display = 'none';
+            }
+            
+            // Validate website URL if provided
+            const website = document.getElementById('website');
+            if (website.value && !/^https?:\/\/.+\..+/.test(website.value)) {
+                website.classList.add('is-invalid');
+                document.getElementById('websiteError').style.display = 'block';
+                isValid = false;
+            } else {
+                website.classList.remove('is-invalid');
+                document.getElementById('websiteError').style.display = 'none';
+            }
+            
+            // Validate terms agreement
+            if (!document.getElementById('terms').checked) {
+                document.getElementById('termsError').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('termsError').style.display = 'none';
             }
             
             if (isValid) {
@@ -811,8 +749,9 @@
                 
                 // For demo purposes, we'll reset the form after showing the modal
                 confirmationModal._element.addEventListener('hidden.bs.modal', function() {
-                    document.getElementById('visaForm').reset();
-                    document.getElementById('resumeFileName').textContent = '';
+                    document.getElementById('ventureForm').reset();
+                    document.getElementById('proposalFileName').textContent = '';
+                    document.getElementById('supportingFileNames').textContent = '';
                     
                     // Reset to step 1
                     document.querySelectorAll('.form-step').forEach(step => {
@@ -827,7 +766,7 @@
                 });
             } else {
                 // Scroll to the first error
-                const firstError = document.querySelector('.is-invalid');
+                const firstError = document.querySelector('.is-invalid, .error-message[style*="display: block"]');
                 if (firstError) {
                     firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
@@ -835,7 +774,7 @@
         });
         
         // Input validation on blur
-        document.querySelectorAll('input, select').forEach(element => {
+        document.querySelectorAll('input, select, textarea').forEach(element => {
             element.addEventListener('blur', function() {
                 if (this.required && !this.value) {
                     this.classList.add('is-invalid');

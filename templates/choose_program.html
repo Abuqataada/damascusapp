@@ -4,17 +4,75 @@
   <h3 class="mb-4 ch-header">CHOOSE YOUR PROGRAM</h3>
   <div class="row">
     {% for program in programs %}
-    <div class="col-md-4 mb-4">
-      <div class="card h-100 text-center">
-        <div class="card-body">
-          <i class="{{ program.icon }} fa-2x mb-3"></i>
-          <h5 class="card-title">{{ program.name }}</h5>
-          <p>₦{{ "{:,.0f}".format(program.price) }}</p>
-          <a href="{{ url_for('program_detail', slug=program.slug) }}" class="btn btn-primary">View Details</a>
-        </div>
-      </div>
+<div class="col-md-4 mb-4">
+  <div class="card h-100 text-center">
+    <div class="card-body">
+      <i class="{{ program.icon }} fa-2x mb-3"></i>
+      <h5 class="card-title">{{ program.name }}</h5>
+      <p>₦{{ "{:,.0f}".format(program.price) }}</p>
+      <button 
+        class="btn btn-primary view-details-btn" 
+        data-slug="{{ program.slug }}"
+        data-url="{{ url_for('program_detail', slug=program.slug) }}"
+        {% if program.slug in ['hire', 'hireb', 'hires'] %}data-no-preload{% endif %}>
+        View Details
+      </button>
     </div>
-    {% endfor %}
   </div>
 </div>
+{% endfor %}
+  </div>
+</div>
+
+
+
+<!-- templates/partials/_toast.html -->
+<div class="position-fixed top-50 start-50 translate-middle" style="z-index: 1055;">
+  <div id="customToast" class="toast align-items-center text-bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="{{ delay or 2000 }}">
+    <div class="d-flex">
+      <div id="toast-body" class="toast-body">
+        {{ message or "Coming soon..." }}
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close" data-no-preload></button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showToast(message = "Coming soon...", delay = 2000) {
+    const toastEl = document.getElementById('customToast');
+    const toastBody = document.getElementById('toast-body');
+    toastBody.innerText = message;
+    toastEl.setAttribute("data-bs-delay", delay);
+    const toast = new bootstrap.Toast(toastEl);
+    toast.show();
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const buttons = document.querySelectorAll('.view-details-btn');
+    const comingSoonSlugs = ["hire", "hireb", "hires"]; // Add more as needed
+
+    buttons.forEach(button => {
+      button.addEventListener('click', function () {
+        const slug = this.dataset.slug;
+        const url = this.dataset.url;
+
+        if (comingSoonSlugs.includes(slug)) {
+          showToast("Coming soon...");
+        } else {
+          window.location.href = url;
+        }
+      });
+    });
+  });
+
+</script>
+
+<style>
+  .toast {
+    font-size: 1.05rem;
+    box-shadow: 0 0.75rem 1.25rem rgba(0,0,0,.3);
+  }
+</style>
+
 {% endblock %}

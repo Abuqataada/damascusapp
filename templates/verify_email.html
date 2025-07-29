@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Your Email - Damascus Projects</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #ebefff;
+            --text: #1a1a1a;
+            --text-light: #666;
+            --border: #e0e0e0;
+            --error: #dc3545;
+            --success: #28a745;
+            --radius: 8px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text);
+            line-height: 1.5;
+            background-color: #f8f9fa;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container {
+            max-width: 480px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            flex: 1;
+        }
+        
+        .card {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            width: 100%;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo img {
+            height: 48px;
+        }
+        
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 0.9375rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        
+        .code-input {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .code-input input {
+            width: 100%;
+            height: 56px;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: all 0.2s;
+        }
+        
+        .code-input input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 0.875rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .btn:hover {
+            background-color: #3a56d4;
+        }
+        
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .resend {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+        
+        .resend a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .resend a:hover {
+            text-decoration: underline;
+        }
+        
+        .alert {
+            padding: 0.875rem 1rem;
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .alert-error {
+            background-color: #f8d7da;
+            color: var(--error);
+            border: 1px solid #f5c6cb;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: var(--success);
+            border: 1px solid #c3e6cb;
+        }
+        
+        .email-display {
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            word-break: break-all;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+            
+            .code-input {
+                gap: 0.5rem;
+            }
+            
+            .code-input input {
+                height: 48px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="logo">
+                <!-- Replace with your logo -->
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Damascus Projects">
+            </div>
+            
+            <h1>Verify Your Email</h1>
+            
+            <p class="subtitle">Enter the 6-digit verification code sent to your email address</p>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'error' if category == 'danger' else category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <div class="email-display">
+                {{ email }}
+            </div>
+            
+            <form id="verificationForm" method="POST" action="{{ url_for('verify_email') }}">
+                <input type="hidden" name="email" value="{{ email }}">
+                
+                <div class="form-group">
+                    <label for="code">Verification Code</label>
+                    <div class="code-input">
+                        <input type="text" name="digit1" maxlength="1" pattern="\d" inputmode="numeric" required autofocus>
+                        <input type="text" name="digit2" maxlength="1" pattern="\d" inputmode="numeric" required>
+                        <input type="text" name="digit3" maxlength="1" pattern="\d" inputmode="numeric" required>
+                        <input type="text" name="digit4" maxlength="1" pattern="\d" inputmode="numeric" required>
+                        <input type="text" name="digit5" maxlength="1" pattern="\d" inputmode="numeric" required>
+                        <input type="text" name="digit6" maxlength="1" pattern="\d" inputmode="numeric" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn">Verify Email</button>
+            </form>
+            
+            <div class="resend">
+                Didn't receive a code? <a href="{{ url_for('resend_verification', email=email) }}">Resend code</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('.code-input input');
+            
+            // Auto-focus and move between inputs
+            inputs.forEach((input, index) => {
+                input.addEventListener('input', (e) => {
+                    if (e.target.value.length === 1) {
+                        if (index < inputs.length - 1) {
+                            inputs[index + 1].focus();
+                        }
+                    }
+                });
+                
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && e.target.value === '') {
+                        if (index > 0) {
+                            inputs[index - 1].focus();
+                        }
+                    }
+                });
+            });
+            
+            // Handle paste event
+            document.addEventListener('paste', (e) => {
+                const activeElement = document.activeElement;
+                if (activeElement && activeElement.name && activeElement.name.startsWith('digit')) {
+                    e.preventDefault();
+                    const pasteData = e.clipboardData.getData('text').trim();
+                    if (/^\d{6}$/.test(pasteData)) {
+                        for (let i = 0; i < Math.min(6, pasteData.length); i++) {
+                            inputs[i].value = pasteData[i];
+                        }
+                        inputs[5].focus();
+                    }
+                }
+            });
+            
+            // Form submission
+            document.getElementById('verificationForm').addEventListener('submit', function(e) {
+                // Combine the digits into a single code
+                const code = Array.from(inputs).map(input => input.value).join('');
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'code';
+                hiddenInput.value = code;
+                this.appendChild(hiddenInput);
+            });
+        });
+    </script>
+</body>
+</html>
